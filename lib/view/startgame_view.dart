@@ -13,14 +13,18 @@ class HomeScreen extends StatelessWidget {
         title: Text('Trivaholic'),
       ),
       body: Column(
-        children: [homeText(), startgameButton(), bottomNavBar()],
+        children: [
+          homeText(),
+          startgameButton(),
+        ],
       ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 
   Widget startgameButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: 96, top: 200),
+      margin: EdgeInsets.only(bottom: 50, top: 200),
       alignment: Alignment.bottomCenter,
       child: SizedBox(
         width: 250,
@@ -40,7 +44,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget homeText() {
     return Container(
-      margin: EdgeInsets.only(top: 200),
+      margin: EdgeInsets.only(top: 100),
       alignment: Alignment.center,
       child: Text(
         'Welcome to Triviaholic!',

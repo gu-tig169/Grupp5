@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 
 class SelectProfileView extends StatelessWidget {
   @override
@@ -12,13 +13,8 @@ class SelectProfileView extends StatelessWidget {
       //   title: Text('Select Profile'),
       // ),
       body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment(0.0, -1.0),
-                  end: Alignment(0.0, 0.7),
-                  colors: [turquoiseGreen, nyanza])),
-          child: Column(
+        child: Gradienter(
+          widget: Column(
             children: [
               spaceBetween(130),
               selectProfileText(),
@@ -29,6 +25,7 @@ class SelectProfileView extends StatelessWidget {
           ),
         ),
       ),
+
       bottomNavigationBar: BottomNavBar(),
     );
   }

@@ -2,33 +2,21 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 
 class StartGameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: nyanza,
-      appBar: AppBar(
-        backgroundColor: illuminatingEmerald,
-        title: Text('Trivaholic'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.person,
-                size: 30,
-              ),
-              onPressed: () {},
-            ),
+      body: Center(
+        child: Gradienter(
+          widget: Column(
+            children: [
+              homeText(),
+              startgameButton(),
+            ],
           ),
-        ],
-      ),
-      body: Column(
-        children: [
-          homeText(),
-          startgameButton(),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
@@ -44,7 +32,7 @@ class StartGameView extends StatelessWidget {
         child: RaisedButton(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-            color: Color(0xfffff3d9d8),
+            color: customPink,
             child: Text(
               'Start Game',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),

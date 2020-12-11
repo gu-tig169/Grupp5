@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/view/widgets/navbar.dart';
 
-class HomeScreen extends StatelessWidget {
+class StartGameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,6 +11,18 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: illuminatingEmerald,
         title: Text('Trivaholic'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.person,
+                size: 30,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -18,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           startgameButton(),
         ],
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 
@@ -49,35 +61,6 @@ class HomeScreen extends StatelessWidget {
       child: Text(
         'Welcome to Triviaholic!',
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
-      ),
-    );
-  }
-
-  Widget bottomNavBar() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 0),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Leaderboard',
-            icon: Icon(Icons.leaderboard),
-          ),
-          BottomNavigationBarItem(
-            label: 'My Profile',
-            icon: Icon(Icons.person),
-          ),
-        ],
-        backgroundColor: illuminatingEmerald,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white,
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
-import 'package:triviaholic/view/widgets/gradient.dart';
 
 class CreateProfileView extends StatefulWidget {
   @override
@@ -13,23 +12,20 @@ class _CreateProfileViewState extends State<CreateProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: nyanza,
+      backgroundColor: nyanza,
       resizeToAvoidBottomInset: false,
-      body: Center(
-          child: Gradienter(
-        widget: Column(
-          children: [
-            spaceBetween(120),
-            userTextField('Username'),
-            spaceBetween(40),
-            dropDown(),
-            spaceBetween(40),
-            profileImage(),
-            spaceBetween(40),
-            createProfileButton(),
-          ],
-        ),
-      )),
+      body: Column(
+        children: [
+          spaceBetween(120),
+          userTextField('Username'),
+          spaceBetween(40),
+          dropDown(),
+          spaceBetween(40),
+          profileImage(),
+          spaceBetween(40),
+          createProfileButton(context),
+        ],
+      ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
@@ -109,7 +105,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     ));
   }
 
-  Widget createProfileButton() {
+  Widget createProfileButton(context) {
     return Container(
       child: SizedBox(
         width: 250,
@@ -122,7 +118,9 @@ class _CreateProfileViewState extends State<CreateProfileView> {
               'Create Profile',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pushNamed(context, '/start');
+            }),
       ),
     );
   }

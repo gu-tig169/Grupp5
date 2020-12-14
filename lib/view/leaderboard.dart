@@ -44,60 +44,21 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   Widget listViewWidget() {
     return ListView.builder(
       itemCount: list.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 0),
-          child: Card(
+      itemBuilder: (context, index) => _listItem(list[index], context),
+    );
+  }
+
+  Widget _listItem(list, context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 0),
+        child: Card(
             child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://pickaface.net/gallery/avatar/20150122_232640_100_simple.png'),
-              ),
-              title: Text(list[index]),
-            ),
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
+                'https://cdn.dribbble.com/users/499731/screenshots/3435273/proff.png'),
           ),
-        );
-      },
-    );
+          title: Text(list),
+          trailing: Text('10 ynkliga poäng'),
+        )));
   }
 }
-
-/*
-class LeaderBoard extends StatelessWidget {
-  // LeaderBoard(this.list);
-
-  @override
-  Widget build(BuildContext context) {
-    final list = ['1', '2', '3', '4'];
-    return ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return ListTile(title: Text(list[index]));
-        });
-
-    //listItem(list[index], context));
-  }
-}
-
-new DropdownButton(
-      items: <String>['Easy', 'Medium', 'Hard'].map((String value) {
-        return new DropdownMenuItem(
-          value: value,
-          child: new Text(value),
-        );
-      }).toList(),
-      onChanged: (_) {},
-    );
-
-*/
-
-/* Widget listItem(index, context) {
-    return ListTile(
-      leading: Image(
-        image: NetworkImage(
-            'https://cdn.dribbble.com/users/499731/screenshots/3435273/proff.png'),
-      ),
-      title: Text('Noa'),
-      trailing: Text('10 ynkla poäng'),
-    );
-  } */

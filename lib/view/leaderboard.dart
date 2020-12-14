@@ -11,7 +11,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
   final list = ['Svenne', 'Babbe', 'Klasse'];
 
   final List<String> _filterList = ['Easy', 'Medium', 'Hard'];
-  String _filterValue = 'All';
+  // String _filterValue = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _LeaderboardViewState extends State<LeaderboardView> {
           PopupMenuButton<String>(
             onSelected: (String value) {
               setState(() {
-                _filterValue = value;
+                //  _filterValue = value;
               });
             },
             itemBuilder: (BuildContext context) {

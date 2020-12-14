@@ -20,7 +20,7 @@ class SelectProfileView extends StatelessWidget {
               selectProfileText(),
               profileDropDown(),
               spaceBetween(40),
-              newProfileButton(),
+              newProfileButton(context),
             ],
           ),
         ),
@@ -66,7 +66,7 @@ Widget profileDropDown() {
   );
 }
 
-Widget newProfileButton() {
+Widget newProfileButton(context) {
   return Container(
     margin: EdgeInsets.only(bottom: 50, top: 130),
     alignment: Alignment.bottomCenter,
@@ -82,7 +82,9 @@ Widget newProfileButton() {
             'New Profile',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
           ),
-          onPressed: () {}),
+          onPressed: () {
+            Navigator.pushNamed(context, '/create');
+          }),
     ),
   );
 }

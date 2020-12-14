@@ -6,25 +6,50 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 60,
       margin: EdgeInsets.only(bottom: 0),
       child: BottomNavigationBar(
+        selectedFontSize: 10,
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
-          ),
+              label: 'Home',
+              icon: SizedBox(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.home,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+                height: 38,
+                width: 38,
+              )),
           BottomNavigationBarItem(
-            label: 'Leaderboard',
-            icon: Icon(Icons.leaderboard),
-          ),
+              label: 'Leaderboard',
+              icon: SizedBox(
+                child: IconButton(
+                  icon: Icon(Icons.leaderboard),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/leaderboard');
+                  },
+                ),
+                height: 38,
+                width: 38,
+              )),
           BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person),
-          ),
+              label: 'Profile',
+              icon: SizedBox(
+                child: IconButton(
+                  icon: Icon(Icons.person),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                ),
+                height: 38,
+                width: 38,
+              )),
         ],
         backgroundColor: illuminatingEmerald,
         selectedItemColor: Colors.white,

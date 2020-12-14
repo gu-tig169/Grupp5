@@ -53,8 +53,8 @@ class _LeaderboardViewState extends State<LeaderboardView> {
         padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 0),
         child: Card(
             child: ListTile(
-          leading: Image(
-            image: NetworkImage(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(
                 'https://cdn.dribbble.com/users/499731/screenshots/3435273/proff.png'),
           ),
           title: Text(list),

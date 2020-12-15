@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
 
 class Gradienter extends StatelessWidget {
-  Widget widget;
+  final Widget widget;
   Gradienter({this.widget});
   @override
   Widget build(BuildContext context) {

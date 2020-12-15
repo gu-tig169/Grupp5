@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:triviaholic/view/createprofile_view.dart';
+import 'package:triviaholic/view/gameboard_view.dart';
 import 'package:triviaholic/view/leaderboard.dart';
+import 'package:triviaholic/view/profile.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'view/startgame_view.dart';
 
@@ -10,5 +12,7 @@ void main() {
     '/start': (context) => StartGameView(),
     '/leaderboard': (context) => LeaderboardView(),
     '/create': (context) => CreateProfileView(),
+    '/profile': (context) => ProfileView(),
+    '/game': (context) => GameBoardView(),
   }));
 }

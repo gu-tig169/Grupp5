@@ -13,7 +13,7 @@ class StartGameView extends StatelessWidget {
           widget: Column(
             children: [
               homeText(),
-              startgameButton(),
+              startgameButton(context),
             ],
           ),
         ),
@@ -22,7 +22,7 @@ class StartGameView extends StatelessWidget {
     );
   }
 
-  Widget startgameButton() {
+  Widget startgameButton(context) {
     return Container(
       margin: EdgeInsets.only(bottom: 50, top: 200),
       alignment: Alignment.bottomCenter,
@@ -37,7 +37,9 @@ class StartGameView extends StatelessWidget {
               'Start Game',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              Navigator.pushNamed(context, '/game');
+            }),
       ),
     );
   }

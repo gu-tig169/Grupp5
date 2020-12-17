@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:provider/provider.dart';
+import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/ProfileImage.dart';
+import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 
@@ -10,6 +14,8 @@ class CreateProfileView extends StatefulWidget {
 }
 
 class _CreateProfileViewState extends State<CreateProfileView> {
+  ProfileImage currentImage;
+  TextEditingController editController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +48,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
       //decoration: BoxDecoration(color: Colors.white),
       margin: EdgeInsets.only(right: 40, left: 40),
       child: TextField(
+        controller: editController,
         decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -57,12 +64,6 @@ class _CreateProfileViewState extends State<CreateProfileView> {
   }
 
   Widget dropDown() {
-    List<String> mockObjects = [
-      'Spongebob',
-      'Leo DiCaprio',
-      'Jake Gyllenhall',
-      'Niko'
-    ];
     return Container(
         margin: EdgeInsets.only(right: 40, left: 40),
         decoration: ShapeDecoration(
@@ -73,25 +74,31 @@ class _CreateProfileViewState extends State<CreateProfileView> {
                 borderRadius: BorderRadius.circular(20))),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
-          items: mockObjects
-              .map((avatar) => DropdownMenuItem(
+          items: ProfileImage.images
+              .map((image) => DropdownMenuItem(
                     child: Row(
                       children: [
                         Container(width: 6),
-                        Icon(Icons.portrait_rounded),
+                        CircleAvatar(backgroundImage: AssetImage(image.path)),
                         Container(
                           width: 10,
                         ),
                         Text(
-                          avatar,
+                          image.title,
                           style: TextStyle(fontSize: 22),
                         ),
                       ],
                     ),
-                    //value: avatar,
+                    value: image,
                   ))
               .toList(),
-          onChanged: (value) {},
+          onChanged: (value) {
+            setState(() {
+              currentImage = value;
+              print(value);
+            });
+          },
+          value: currentImage,
           hint: Text('Choose avatar'),
           isExpanded: true,
         )));
@@ -107,8 +114,9 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     return Center(
         child: CircleAvatar(
       radius: 50,
-      backgroundImage: NetworkImage(
-          'https://img.buzzfeed.com/buzzfeed-static/static/2017-08/7/5/asset/buzzfeed-prod-fastlane-02/sub-buzz-12005-1502099529-5.jpg'),
+      backgroundImage: (currentImage != null)
+          ? AssetImage(currentImage.path)
+          : AssetImage('assets/blondegirl.png'),
     ));
   }
 
@@ -127,6 +135,8 @@ class _CreateProfileViewState extends State<CreateProfileView> {
             ),
             onPressed: () {
               Navigator.pushNamed(context, '/start');
+              Provider.of<PlayerState>(context, listen: false)
+                  .addPlayer(Player(editController.text, currentImage.path));
             }),
       ),
     );

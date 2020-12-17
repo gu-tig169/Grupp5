@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';

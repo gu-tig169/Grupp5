@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/colors/CustomColors.dart';
 
 class BottomNavBar extends StatelessWidget {
   @override

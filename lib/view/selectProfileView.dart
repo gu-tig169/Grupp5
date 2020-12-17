@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
-class SelectProfileView extends StatelessWidget {
+class SelectProfileView extends StatefulWidget {
+  @override
+  _SelectProfileViewState createState() => _SelectProfileViewState();
+}
+
+class _SelectProfileViewState extends State<SelectProfileView> {
+  final List<String> userList = ['Dennis', 'Noa', 'Niko', 'Alban', 'Lukas'];
+  var _userSelected;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +25,7 @@ class SelectProfileView extends StatelessWidget {
             children: [
               spaceBetween(130),
               selectProfileText(),
-              profileDropDown(),
+              profileDropDown(userList),
               spaceBetween(40),
               newProfileButton(context),
             ],
@@ -40,7 +47,7 @@ Widget selectProfileText() {
   ));
 }
 
-Widget profileDropDown() {
+Widget profileDropDown(List<String> list) {
   return Container(
     margin: EdgeInsets.only(top: 20, left: 40, right: 40),
     decoration: BoxDecoration(
@@ -55,14 +62,13 @@ Widget profileDropDown() {
           color: brunsWickGreen,
         ),
         iconEnabledColor: darkJungleGreen,
-        items: <String>['Dennis', 'Alban', 'Lukas', 'Niko', 'Noa']
-            .map((String value) {
+        items: list.map((userItem) {
           return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value, style: TextStyle(fontSize: 22)),
+            value: userItem,
+            child: Text(userItem, style: TextStyle(fontSize: 22)),
           );
         }).toList(),
-        onChanged: (_) {}),
+        onChanged: (selectedUser) {}),
   );
 }
 

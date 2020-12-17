@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 
 class LeaderboardView extends StatefulWidget {

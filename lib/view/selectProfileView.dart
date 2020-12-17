@@ -9,7 +9,7 @@ class SelectProfileView extends StatefulWidget {
 }
 
 class _SelectProfileViewState extends State<SelectProfileView> {
-  final List<String> userList = ['Dennis', 'Noa', 'Niko', 'Alban', 'Lukas'];
+  List<String> userList = ['Dennis', 'Noa', 'Niko', 'Alban', 'Lukas'];
   var _userSelected;
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,41 @@ class _SelectProfileViewState extends State<SelectProfileView> {
       bottomNavigationBar: BottomNavBar(),
     );
   }
+
+  Widget profileDropDown(List<String> list) {
+    return Container(
+        margin: EdgeInsets.only(top: 20, left: 40, right: 40),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.5, color: brunsWickGreen),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        child: DropdownButton<String>(
+          dropdownColor: nyanza,
+          isExpanded: true,
+          iconSize: 50,
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: brunsWickGreen,
+          ),
+          iconEnabledColor: darkJungleGreen,
+          items: list
+              .map((userItem) => DropdownMenuItem<String>(
+                  child: Row(children: [
+                    Text(userItem, style: TextStyle(fontSize: 22)),
+                  ]),
+                  value: userItem))
+              .toList(),
+          onChanged: (selectedUser) {
+            setState(() {
+              _userSelected = selectedUser;
+            });
+          },
+          value: _userSelected,
+          /*hint: (Text(
+            'Choose profile',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          )),*/
+        ));
+  }
 }
 
 Widget selectProfileText() {
@@ -45,31 +80,6 @@ Widget selectProfileText() {
     style: TextStyle(
         fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
   ));
-}
-
-Widget profileDropDown(List<String> list) {
-  return Container(
-    margin: EdgeInsets.only(top: 20, left: 40, right: 40),
-    decoration: BoxDecoration(
-        border: Border.all(width: 1.5, color: brunsWickGreen),
-        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-    child: DropdownButton<String>(
-        dropdownColor: nyanza,
-        isExpanded: true,
-        iconSize: 50,
-        icon: Icon(
-          Icons.arrow_drop_down,
-          color: brunsWickGreen,
-        ),
-        iconEnabledColor: darkJungleGreen,
-        items: list.map((userItem) {
-          return DropdownMenuItem<String>(
-            value: userItem,
-            child: Text(userItem, style: TextStyle(fontSize: 22)),
-          );
-        }).toList(),
-        onChanged: (selectedUser) {}),
-  );
 }
 
 Widget newProfileButton(context) {

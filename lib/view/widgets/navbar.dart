@@ -20,7 +20,7 @@ class BottomNavBar extends StatelessWidget {
                     Icons.home,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.popAndPushNamed(context, '/');
                   },
                 ),
                 height: 38,
@@ -32,7 +32,7 @@ class BottomNavBar extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.leaderboard),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/leaderboard');
+                    Navigator.popAndPushNamed(context, '/leaderboard');
                   },
                 ),
                 height: 38,
@@ -44,7 +44,7 @@ class BottomNavBar extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.person),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/');
+                    Navigator.popAndPushNamed(context, '/profile');
                   },
                 ),
                 height: 38,

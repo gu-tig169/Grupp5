@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:triviaholic/assets/CustomColors.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 
 class CreateProfileView extends StatefulWidget {
@@ -12,19 +13,25 @@ class _CreateProfileViewState extends State<CreateProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: nyanza,
+      appBar: AppBar(
+        backgroundColor: turquoiseGreen,
+        title: Text('Create Profile'),
+        centerTitle: true,
+      ),
       resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          spaceBetween(120),
-          userTextField('Username'),
-          spaceBetween(40),
-          dropDown(),
-          spaceBetween(40),
-          profileImage(),
-          spaceBetween(40),
-          createProfileButton(context),
-        ],
+      body: Gradienter(
+        widget: Column(
+          children: [
+            spaceBetween(120),
+            userTextField('Username'),
+            spaceBetween(40),
+            dropDown(),
+            spaceBetween(40),
+            profileImage(),
+            spaceBetween(40),
+            createProfileButton(context),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );

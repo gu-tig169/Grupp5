@@ -8,7 +8,7 @@ class LeaderboardView extends StatefulWidget {
 }
 
 class _LeaderboardViewState extends State<LeaderboardView> {
-  final list = ['Svenne', 'Babbe', 'Klasse'];
+  final list = ['Sverre', 'Klabbe', 'Klasse'];
 
   final List<String> _filterList = ['Easy', 'Medium', 'Hard'];
   // String _filterValue = 'All';

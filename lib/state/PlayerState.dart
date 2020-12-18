@@ -7,4 +7,5 @@ class PlayerState extends ChangeNotifier {
     RestService.registerPlayer(player);
     notifyListeners();
   }
+  
 }

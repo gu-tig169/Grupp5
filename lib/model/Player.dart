@@ -7,7 +7,7 @@ class Player {
   int _bestScore = 0;
   String _image;
 
-  Player(this._username, this._image);
+  Player(this._username, this._image,);
 
   String get username => _username;
 

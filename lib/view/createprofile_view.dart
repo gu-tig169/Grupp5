@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/model/ProfileImage.dart';
@@ -134,11 +135,13 @@ class _CreateProfileViewState extends State<CreateProfileView> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/start');
+              RestService.getPlayers();
+               //Navigator.pushNamed(context, '/start');
               Provider.of<PlayerState>(context, listen: false)
                   .addPlayer(Player(editController.text, currentImage.path));
             }),
       ),
     );
   }
+
 }

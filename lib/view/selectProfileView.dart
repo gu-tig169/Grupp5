@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
@@ -9,7 +12,6 @@ class SelectProfileView extends StatefulWidget {
 }
 
 class _SelectProfileViewState extends State<SelectProfileView> {
-  List<String> userList = ['Dennis', 'Noa', 'Niko', 'Alban', 'Lukas'];
   var _userSelected;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,8 @@ class _SelectProfileViewState extends State<SelectProfileView> {
             children: [
               spaceBetween(130),
               selectProfileText(),
-              profileDropDown(userList),
+              profileDropDown(Provider.of<PlayerState>(context, listen: false)
+                  .getPlayers()),
               spaceBetween(40),
               newProfileButton(context),
             ],
@@ -37,7 +40,7 @@ class _SelectProfileViewState extends State<SelectProfileView> {
     );
   }
 
-  Widget profileDropDown(List<String> list) {
+  Widget profileDropDown(List<Player> list) {
     return Container(
         margin: EdgeInsets.only(top: 20, left: 40, right: 40),
         decoration: BoxDecoration(
@@ -54,10 +57,12 @@ class _SelectProfileViewState extends State<SelectProfileView> {
           iconEnabledColor: darkJungleGreen,
           items: list
               .map((userItem) => DropdownMenuItem<String>(
-                  child: Row(children: [
-                    Text(userItem, style: TextStyle(fontSize: 22)),
-                  ]),
-                  value: userItem))
+                      child: Row(children: [
+                        Text(userItem.amountOfGames.toString(),
+                            style: TextStyle(fontSize: 22)),
+                      ]),
+                      value: userItem.amountOfGames.toString()) // klura här sen
+                  )
               .toList(),
           onChanged: (selectedUser) {
             setState(() {

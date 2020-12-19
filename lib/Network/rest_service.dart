@@ -6,9 +6,8 @@ import 'package:http/http.dart' as http;
 class RestService {
   static final String url =
       'https://quiz-26e0c-default-rtdb.firebaseio.com/user.json';
-  
 
- static void registerPlayer(Player player) async {
+  static void registerPlayer(Player player) async {
     http.Response response = await http.post(
       url,
       headers: <String, String>{
@@ -23,26 +22,32 @@ class RestService {
       }),
     );
   }
-  // hämtar players? 
-static Future <List<Player>> getPlayers() async {
-http.Response response = await http.get(url);
-return _mapResponseToList(response);
-}
-static List<Player> _mapResponseToList(http.Response response) {
-  List<Player> playerList = [];
-  var jsonResponseBody = response.body;
-  var responseBody = jsonDecode(jsonResponseBody);
-  
-  
-    /*
-          username: object["username"],
-          amountOfGames: object["amountOfGames"],
-          averageScore: object["averageScore"],
-          bestScore: object["bestScore"],
-          image: object["image"],
-          */
-  print (responseBody);
-  return playerList;
-  
-}
+
+  // hämtar players
+  static Future<List<Player>> getPlayers() async {
+    http.Response response = await http.get(url);
+    return _mapResponseToList(response);
+  }
+
+  static List<Player> _mapResponseToList(http.Response response) {
+    List<Player> playerList = [];
+    var jsonResponseBody = response.body;
+    var responseBody = jsonDecode(jsonResponseBody);
+
+    // loopar igenom players och lägger till
+    responseBody.forEach(
+      (key, value) {
+        playerList.add(Player(
+            username: value['username'],
+            amountOfGames: value['amountOfGames'],
+            averageScore: value['averageScore'],
+            bestScore: value['bestScore'],
+            image: value['image']));
+      },
+    );
+
+    // playerList.forEach((element) => print(element.username));
+
+    return playerList;
+  }
 }

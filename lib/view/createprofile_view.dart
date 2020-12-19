@@ -121,6 +121,33 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     ));
   }
 
+  alertUserExists(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Triviaholic found a problem!"),
+      content: Text("This username is already used"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   Widget createProfileButton(context) {
     return Container(
       child: SizedBox(
@@ -136,12 +163,14 @@ class _CreateProfileViewState extends State<CreateProfileView> {
             ),
             onPressed: () {
               RestService.getPlayers();
-               //Navigator.pushNamed(context, '/start');
+              //Navigator.pushNamed(context, '/start');
               Provider.of<PlayerState>(context, listen: false)
-                  .addPlayer(Player(editController.text, currentImage.path));
+                  .addPlayer(Player(
+                      username: editController.text, image: currentImage.path))
+                  .then((value) =>
+                      (value == -1) ? alertUserExists(context) : null);
             }),
       ),
     );
   }
-
 }

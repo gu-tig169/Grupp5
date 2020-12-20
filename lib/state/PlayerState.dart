@@ -5,6 +5,28 @@ import 'package:triviaholic/network/rest_service.dart';
 class PlayerState extends ChangeNotifier {
   List<Player> _playerList = [];
 
+  Player _currentUser;
+
+  void setCurrentUser(String username) {
+    _currentUser = _matchPlayerByUsername(username);
+    // print(_matchPlayerByUsername(username));
+  }
+
+  Player getCurrentUser() {
+    return _currentUser;
+  }
+
+  Player _matchPlayerByUsername(String username) {
+    Player player;
+    _playerList.forEach((existingPlayer) {
+      if (username == existingPlayer.username) {
+        //  print(existingPlayer);
+        player = existingPlayer;
+      }
+    });
+    return player;
+  }
+
   Future<int> addPlayer(Player player) async {
     List<Player> existingPlayers = await getPlayers();
     bool exists = false;
@@ -19,8 +41,6 @@ class PlayerState extends ChangeNotifier {
       return -1;
     }
 
-    print('hoppas denna text aldrig syns');
-
     RestService.registerPlayer(player);
     notifyListeners();
     return 1;
@@ -33,6 +53,7 @@ class PlayerState extends ChangeNotifier {
 
   List<Player> getPlayers() {
     _injectList();
+    notifyListeners();
     return _playerList;
   }
 }

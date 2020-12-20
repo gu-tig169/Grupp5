@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 
 class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Player currentUser =
+        Provider.of<PlayerState>(context, listen: false).getCurrentUser();
     return Scaffold(
       body: Gradienter(
         widget: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _profileTitle(),
+              _profileTitle(currentUser.username),
               spaceBetween(70),
-              _profilePicture(),
+              _profilePicture(currentUser.image),
               spaceBetween(20),
-              _profileInfo(),
+              _profileInfo(currentUser.bestScore),
               spaceBetween(50),
               _deleteButton(),
             ],
@@ -27,11 +32,10 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _profilePicture() {
+  Widget _profilePicture(String image) {
     return Container(
       child: CircleAvatar(
-        backgroundImage: NetworkImage(
-            'https://lh3.googleusercontent.com/proxy/Ygs0ZwjugIm0NZ7QggK4SGH-3nSpKt8o7Xn8FdeJPoD1kGw8TzYYVW4WUk3tLLv9qocZGBO5HkEu-vFmwea552yptkIgJJHWbcioSbCYvoWwMNTkmI_mS8cqs7N5ExhcYqfWQgBaFEEa1z0r_wWjErLp2Q'),
+        backgroundImage: AssetImage(image),
         radius: 50,
       ),
     );
@@ -43,16 +47,16 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _profileInfo() {
+  Widget _profileInfo(int bestScore) {
     return Column(
       children: [
         Text(
-          'Peter Parker',
+          'Current highscore',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
         ),
         spaceBetween(20),
         Text(
-          'Points: 100',
+          '$bestScore',
           style: TextStyle(fontSize: 30),
         ),
       ],
@@ -78,11 +82,11 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _profileTitle() {
+  Widget _profileTitle(String username) {
     return Container(
       margin: EdgeInsets.only(top: 1),
       child: Text(
-        'Your Profile',
+        username,
         style: TextStyle(fontSize: 42),
       ),
     );

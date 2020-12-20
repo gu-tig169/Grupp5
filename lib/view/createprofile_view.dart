@@ -163,7 +163,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
             ),
             onPressed: () {
               RestService.getPlayers();
-              //Navigator.pushNamed(context, '/start');
+              Navigator.pushNamed(context, '/start');
               Provider.of<PlayerState>(context, listen: false)
                   .addPlayer(Player(
                       username: editController.text, image: currentImage.path))

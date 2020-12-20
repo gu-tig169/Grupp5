@@ -58,22 +58,33 @@ class _SelectProfileViewState extends State<SelectProfileView> {
           items: list
               .map((userItem) => DropdownMenuItem<String>(
                       child: Row(children: [
-                        Text(userItem.amountOfGames.toString(),
-                            style: TextStyle(fontSize: 22)),
+                        Container(
+                          margin: EdgeInsets.only(left: 8.8),
+                          child: Text(userItem.username.toString(),
+                              style: TextStyle(fontSize: 22)),
+                        ),
                       ]),
-                      value: userItem.amountOfGames.toString()) // klura här sen
+                      value: userItem.username) // klura här sen
                   )
               .toList(),
-          onChanged: (selectedUser) {
-            setState(() {
-              _userSelected = selectedUser;
-            });
+          onChanged: (value) {
+            Provider.of<PlayerState>(context, listen: false)
+                .setCurrentUser(value);
+
+            /* print(Provider.of<PlayerState>(context, listen: false)
+                .getCurrentUser());
+                */
+
+            // print(value);
           },
           value: _userSelected,
-          /*hint: (Text(
-            'Choose profile',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          )),*/
+          hint: Container(
+            margin: EdgeInsets.only(left: 8.8),
+            child: (Text(
+              'Choose profile',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            )),
+          ),
         ));
   }
 }

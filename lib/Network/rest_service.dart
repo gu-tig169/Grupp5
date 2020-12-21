@@ -21,9 +21,29 @@ class RestService {
         "image": player.image
       }),
     );
-  }
+  } 
 
+
+  /*static void deletePlayer(Player player) async {
+    http.Response response = await http.delete(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      }, 
+    
+    );
+  }
+*/
+
+/*static Future<List<Player>> deletePlayer(Player player) async {
+    http.Response res = await http.delete(url);
+    
+    return _mapResponseToList(res);
+  }
+*/
   // hämtar players
+
+
   static Future<List<Player>> getPlayers() async {
     http.Response response = await http.get(url);
     return _mapResponseToList(response);

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/network/rest_service.dart';
 
 class ProfileView extends StatelessWidget {
   @override
@@ -23,6 +25,8 @@ class ProfileView extends StatelessWidget {
               spaceBetween(20),
               _profileInfo(currentUser.bestScore),
               spaceBetween(50),
+              _editProfileButton(),
+              spaceBetween(15),
               _deleteButton(),
             ],
           ),
@@ -63,7 +67,8 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _deleteButton() {
+
+Widget _editProfileButton() {
     return Container(
       child: SizedBox(
         width: 200,
@@ -74,10 +79,30 @@ class ProfileView extends StatelessWidget {
               borderRadius: BorderRadius.circular(17),
             ),
             child: Text(
-              'Delete',
+              'Edit',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
             onPressed: () {}),
+      ),
+    );
+  }
+  Widget _deleteButton() {
+    return Container(
+      child: SizedBox(
+        width: 100,
+        height: 35,
+        child: RaisedButton(
+            color: Colors.red,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(17),
+            ),
+            child: Text(
+              'Delete',
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            ),
+            onPressed: () {
+            
+            }),
       ),
     );
   }

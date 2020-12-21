@@ -1,4 +1,7 @@
+import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/model/ProfileImage.dart';
+import 'package:triviaholic/state/PlayerState.dart';
+import 'package:triviaholic/view/profile.dart';
 
 class Player {
   String username;
@@ -20,4 +23,13 @@ class Player {
   int get bestScore => _bestScore;
   String get image => _image;
   */
+/*void removeItem(Player player) async {
+    _playerList = await RestService.deletePlayer(player);
+    notifyListeners();
+  }
+*/
+
 }
+
+
+

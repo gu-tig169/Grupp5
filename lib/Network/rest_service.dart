@@ -4,12 +4,12 @@ import 'package:triviaholic/model/Player.dart';
 import 'package:http/http.dart' as http;
 
 class RestService {
-  static final String url =
-      'https://quiz-26e0c-default-rtdb.firebaseio.com/user.json';
+  static final String url = 'https://quiz-26e0c-default-rtdb.firebaseio.com/';
 
   static void registerPlayer(Player player) async {
-    http.Response response = await http.post(
-      url,
+    String path = "user.json";
+    await http.post(
+      url + path,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -21,32 +21,19 @@ class RestService {
         "image": player.image
       }),
     );
-  } 
-
-
-  /*static void deletePlayer(Player player) async {
-    http.Response response = await http.delete(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      }, 
-    
-    );
   }
-*/
 
-/*static Future<List<Player>> deletePlayer(Player player) async {
-    http.Response res = await http.delete(url);
-    
-    return _mapResponseToList(res);
-  }
-*/
   // hämtar players
-
-
   static Future<List<Player>> getPlayers() async {
-    http.Response response = await http.get(url);
+    String path = "user.json";
+    http.Response response = await http.get(url + path);
     return _mapResponseToList(response);
+  }
+
+  // Deletes player
+  static void deletePlayer(String id) async {
+    String path = "user/";
+    await http.delete("$url$path$id.json");
   }
 
   static List<Player> _mapResponseToList(http.Response response) {
@@ -58,6 +45,7 @@ class RestService {
     responseBody.forEach(
       (key, value) {
         playerList.add(Player(
+            id: key,
             username: value['username'],
             amountOfGames: value['amountOfGames'],
             averageScore: value['averageScore'],

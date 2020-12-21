@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/network/rest_service.dart';
 
 class PlayerState extends ChangeNotifier {
   List<Player> _playerList = [];
@@ -9,41 +9,43 @@ class PlayerState extends ChangeNotifier {
 
   void setCurrentUser(String username) {
     _currentUser = _matchPlayerByUsername(username);
-    // print(_matchPlayerByUsername(username));
   }
 
   Player getCurrentUser() {
     return _currentUser;
   }
 
+  void deletePlayer(String id) {
+    RestService.deletePlayer(id);
+    notifyListeners();
+
+    print(_playerList);
+  }
+
   Player _matchPlayerByUsername(String username) {
     Player player;
     _playerList.forEach((existingPlayer) {
       if (username == existingPlayer.username) {
-        //  print(existingPlayer);
         player = existingPlayer;
       }
     });
     return player;
   }
 
-  Future<int> addPlayer(Player player) async {
-    List<Player> existingPlayers = await getPlayers();
+  bool addPlayer(Player player) {
     bool exists = false;
-    existingPlayers.forEach((existingPlayer) {
+    _playerList.forEach((existingPlayer) {
       if (player.username == existingPlayer.username) {
         exists = true;
         return;
       }
     });
 
-    if (exists) {
-      return -1;
+    if (!exists) {
+      RestService.registerPlayer(player);
+      notifyListeners();
     }
-
-    RestService.registerPlayer(player);
-    notifyListeners();
-    return 1;
+    return exists;
   }
 
   void _injectList() async {
@@ -53,7 +55,6 @@ class PlayerState extends ChangeNotifier {
 
   List<Player> getPlayers() {
     _injectList();
-    notifyListeners();
     return _playerList;
   }
 }

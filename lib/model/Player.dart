@@ -1,9 +1,5 @@
-import 'package:triviaholic/Network/rest_service.dart';
-import 'package:triviaholic/model/ProfileImage.dart';
-import 'package:triviaholic/state/PlayerState.dart';
-import 'package:triviaholic/view/profile.dart';
-
 class Player {
+  String id;
   String username;
   int amountOfGames;
   int averageScore;
@@ -11,7 +7,8 @@ class Player {
   String image;
 
   Player(
-      {this.username,
+      {this.id,
+      this.username,
       this.amountOfGames = 0,
       this.averageScore = 0,
       this.bestScore = 0,
@@ -30,6 +27,3 @@ class Player {
 */
 
 }
-
-
-

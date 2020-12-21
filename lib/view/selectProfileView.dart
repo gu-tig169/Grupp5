@@ -6,41 +6,30 @@ import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
-class SelectProfileView extends StatefulWidget {
-  @override
-  _SelectProfileViewState createState() => _SelectProfileViewState();
-}
-
-class _SelectProfileViewState extends State<SelectProfileView> {
-  var _userSelected;
+class SelectProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   backgroundColor: illuminatingEmerald,
-      //   title: Text('Select Profile'),
-      // ),
       body: Center(
         child: Gradienter(
           widget: Column(
             children: [
               spaceBetween(130),
               selectProfileText(),
-              profileDropDown(Provider.of<PlayerState>(context, listen: false)
-                  .getPlayers()),
+              Consumer<PlayerState>(
+                  builder: (context, state, child) =>
+                      profileDropDown(state.getPlayers(), context)),
               spaceBetween(40),
               newProfileButton(context),
             ],
           ),
         ),
       ),
-
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  Widget profileDropDown(List<Player> list) {
+  Widget profileDropDown(List<Player> list, BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 20, left: 40, right: 40),
         decoration: BoxDecoration(
@@ -70,14 +59,7 @@ class _SelectProfileViewState extends State<SelectProfileView> {
           onChanged: (value) {
             Provider.of<PlayerState>(context, listen: false)
                 .setCurrentUser(value);
-
-            /* print(Provider.of<PlayerState>(context, listen: false)
-                .getCurrentUser());
-                */
-
-            // print(value);
           },
-          value: _userSelected,
           hint: Container(
             margin: EdgeInsets.only(left: 8.8),
             child: (Text(

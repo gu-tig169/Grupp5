@@ -163,12 +163,16 @@ class _CreateProfileViewState extends State<CreateProfileView> {
             ),
             onPressed: () {
               RestService.getPlayers();
-              Navigator.pushNamed(context, '/start');
-              Provider.of<PlayerState>(context, listen: false)
-                  .addPlayer(Player(
-                      username: editController.text, image: currentImage.path))
-                  .then((value) =>
-                      (value == -1) ? alertUserExists(context) : null);
+              bool userNameExists =
+                  Provider.of<PlayerState>(context, listen: false).addPlayer(
+                      Player(
+                          username: editController.text,
+                          image: currentImage.path));
+              print(userNameExists);
+              (userNameExists)
+                  ? alertUserExists(context)
+                  : Navigator.pushNamed(context, '/start');
+              ;
             }),
       ),
     );

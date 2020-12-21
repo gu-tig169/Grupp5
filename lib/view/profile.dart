@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
-import 'package:triviaholic/network/rest_service.dart';
 
 class ProfileView extends StatelessWidget {
   @override
@@ -27,7 +25,7 @@ class ProfileView extends StatelessWidget {
               spaceBetween(50),
               _editProfileButton(),
               spaceBetween(15),
-              _deleteButton(),
+              _deleteButton(context, currentUser),
             ],
           ),
         ),
@@ -67,8 +65,7 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-
-Widget _editProfileButton() {
+  Widget _editProfileButton() {
     return Container(
       child: SizedBox(
         width: 200,
@@ -86,7 +83,8 @@ Widget _editProfileButton() {
       ),
     );
   }
-  Widget _deleteButton() {
+
+  Widget _deleteButton(BuildContext context, Player playerToDelete) {
     return Container(
       child: SizedBox(
         width: 100,
@@ -101,7 +99,9 @@ Widget _editProfileButton() {
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
             onPressed: () {
-            
+              Provider.of<PlayerState>(context, listen: false)
+                  .deletePlayer(playerToDelete.id);
+              Navigator.pushNamed(context, "/");
             }),
       ),
     );

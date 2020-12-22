@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:triviaholic/Network/game_data.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/Category.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
@@ -12,6 +14,7 @@ class StartGameView extends StatefulWidget {
 
 class _StartGameViewState extends State<StartGameView> {
   final List<String> difficultylist = ['Easy', 'Medium', 'Hard'];
+  int currentCategory = -1;
   var _itemselected = 'Easy';
 
   @override
@@ -21,11 +24,15 @@ class _StartGameViewState extends State<StartGameView> {
         child: Gradienter(
           widget: Column(
             children: [
+              spaceBetween(100),
               homeText(),
               spaceBetween(30),
               dropDownTitle(),
-              spaceBetween(10),
+              spaceBetween(20),
               dropdownGenerator(difficultylist),
+              spaceBetween(30),
+              categoryDropDown(),
+              spaceBetween(130),
               startgameButton(context),
             ],
           ),
@@ -37,7 +44,7 @@ class _StartGameViewState extends State<StartGameView> {
 
   Widget startgameButton(context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 50, top: 200),
+      // margin: EdgeInsets.only(bottom: 50, top: 120),
       alignment: Alignment.bottomCenter,
       child: SizedBox(
         width: 250,
@@ -51,7 +58,8 @@ class _StartGameViewState extends State<StartGameView> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/game');
+              GameData.getGameData();
+              //Navigator.pushNamed(context, '/game');
             }),
       ),
     );
@@ -59,7 +67,7 @@ class _StartGameViewState extends State<StartGameView> {
 
   Widget homeText() {
     return Container(
-      margin: EdgeInsets.only(top: 100),
+      // margin: EdgeInsets.only(top: 100),
       alignment: Alignment.center,
       child: Text(
         'Welcome to Triviaholic!',
@@ -84,17 +92,17 @@ class _StartGameViewState extends State<StartGameView> {
                 child: DropdownButton(
               dropdownColor: nyanza,
               items: list
-                  .map((difficultyitem) => DropdownMenuItem(
-                        value: difficultyitem,
+                  .map((dropdownitem) => DropdownMenuItem(
+                        value: dropdownitem,
                         child: Row(
                           children: [
                             Container(width: 6),
-                            Icon(Icons.question_answer),
+                            //Icon(Icons.question_answer),
                             Container(
                               width: 10,
                             ),
                             Text(
-                              difficultyitem,
+                              dropdownitem,
                               style: TextStyle(fontSize: 22),
                             ),
                           ],
@@ -114,9 +122,45 @@ class _StartGameViewState extends State<StartGameView> {
   Widget dropDownTitle() {
     return Container(
       child: Text(
-        'Choose difficulty:',
+        'Choose your difficulty and category',
         style: TextStyle(fontWeight: FontWeight.w500),
       ),
     );
+  }
+
+  Widget categoryDropDown() {
+    return Container(
+        margin: EdgeInsets.only(right: 90, left: 90),
+        decoration: ShapeDecoration(
+            color: nyanza,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    width: 2, style: BorderStyle.solid, color: turquoiseGreen),
+                borderRadius: BorderRadius.circular(20))),
+        child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+          dropdownColor: nyanza,
+          items: Category.categories
+              .map((category) => DropdownMenuItem(
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10),
+                      child: Text(
+                        category.category,
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ),
+                    value: category.categorypath,
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              currentCategory = value;
+              print(value);
+            });
+          },
+          value: currentCategory,
+          hint: Text('Choose categories'),
+          isExpanded: true,
+        )));
   }
 }

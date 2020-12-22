@@ -101,6 +101,8 @@ class ProfileView extends StatelessWidget {
             onPressed: () {
               Provider.of<PlayerState>(context, listen: false)
                   .deletePlayer(playerToDelete.id);
+              Provider.of<PlayerState>(context, listen: false)
+                  .clearCurrentUser();
               Navigator.pushNamed(context, "/");
             }),
       ),

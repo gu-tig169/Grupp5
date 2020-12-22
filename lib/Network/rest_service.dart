@@ -54,8 +54,6 @@ class RestService {
       },
     );
 
-    // playerList.forEach((element) => print(element.username));
-
     return playerList;
   }
 }

@@ -18,7 +18,8 @@ class RestService {
         "amountOfGames": player.amountOfGames,
         "averageScore": player.averageScore,
         "bestScore": player.bestScore,
-        "image": player.image
+        "image": player.image,
+        "currentScore": player.currentScore
       }),
     );
   }
@@ -36,6 +37,27 @@ class RestService {
     await http.delete("$url$path$id.json");
   }
 
+  //Updates players Highscore
+  static void editPlayer(Player player) async {
+    String path = "user/";
+
+    await http.put(
+      url + path + player.id + '.json',
+      //"$url$path$id$bestScore.json",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "username": player.username,
+        "amountOfGames": player.amountOfGames,
+        "averageScore": player.averageScore,
+        "bestScore": player.bestScore,
+        "image": player.image,
+        "currentScore": player.currentScore
+      }),
+    );
+  }
+
   static List<Player> _mapResponseToList(http.Response response) {
     List<Player> playerList = [];
     var jsonResponseBody = response.body;
@@ -45,12 +67,14 @@ class RestService {
     responseBody.forEach(
       (key, value) {
         playerList.add(Player(
-            id: key,
-            username: value['username'],
-            amountOfGames: value['amountOfGames'],
-            averageScore: value['averageScore'],
-            bestScore: value['bestScore'],
-            image: value['image']));
+          id: key,
+          username: value['username'],
+          amountOfGames: value['amountOfGames'],
+          averageScore: value['averageScore'],
+          bestScore: value['bestScore'],
+          image: value['image'],
+          currentScore: value['currentScore'],
+        ));
       },
     );
 

@@ -5,14 +5,17 @@ class Player {
   int averageScore;
   int bestScore;
   String image;
+  int currentScore;
 
-  Player(
-      {this.id,
-      this.username,
-      this.amountOfGames = 0,
-      this.averageScore = 0,
-      this.bestScore = 0,
-      this.image});
+  Player({
+    this.id,
+    this.username,
+    this.amountOfGames = 0,
+    this.averageScore = 0,
+    this.bestScore = 0,
+    this.image,
+    this.currentScore = 0,
+  });
 /*
   String get username => _username;
   int get amountOfGames => _amountOfGames;

@@ -7,6 +7,7 @@ class Player {
   String image;
   int currentScore;
 
+
   Player({
     this.id,
     this.username,
@@ -28,5 +29,6 @@ class Player {
     notifyListeners();
   }
 */
+
 
 }

@@ -15,11 +15,13 @@ class PlayerState extends ChangeNotifier {
     return _currentUser;
   }
 
+  void clearCurrentUser() {
+    _currentUser = null;
+  }
+
   void deletePlayer(String id) {
     RestService.deletePlayer(id);
     notifyListeners();
-
-    print(_playerList);
   }
 
   editPlayer(Player player) {

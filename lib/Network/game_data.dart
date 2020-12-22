@@ -17,7 +17,6 @@ class GameData {
 
     var jsonResponse = response.body;
     var responseBody = jsonDecode(jsonResponse)['results'];
-    //print(responseBody);
 
     for (var question in responseBody) {
       print(question);

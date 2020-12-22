@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:triviaholic/Network/game_data.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Category.dart';
+import 'package:triviaholic/model/Question.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
@@ -13,9 +14,9 @@ class StartGameView extends StatefulWidget {
 }
 
 class _StartGameViewState extends State<StartGameView> {
-  final List<String> difficultylist = ['Easy', 'Medium', 'Hard'];
+  final List<String> difficultylist = ['Any', 'Easy', 'Medium', 'Hard'];
 
-  String currentDifficulty = 'Easy';
+  String currentDifficulty = 'Any';
   String currentCategory = 'Any';
 
   List<String> params = [];
@@ -62,11 +63,55 @@ class _StartGameViewState extends State<StartGameView> {
               'Start Game',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {
-              GameData.getGameData(params);
-              Navigator.pushNamed(context, '/game');
+            onPressed: () async {
+              List<Question> questions = [];
+              if (currentCategory != 'Any') {
+                params.add(
+                    'category=' + Category.getCategoryPath(currentCategory));
+              }
+
+              if (currentDifficulty != 'Any') {
+                params.add('difficulty=$currentDifficulty'.toLowerCase());
+              }
+
+              await GameData.getGameData(params)
+                  .then((value) => questions = value);
+              print(questions.length);
+              questions.length >= 1
+                  ? Navigator.pushNamed(context, '/game')
+                  : alertNotEnoughQuestions(context);
+              params = [];
             }),
       ),
+    );
+  }
+
+// kanske dlytta den här alerten till egen fil? Blir grötigt
+  alertNotEnoughQuestions(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Triviaholic found a problem!"),
+      content:
+          Text("Not enough questions found. Try to change difficulty to 'Any'"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 
@@ -112,7 +157,6 @@ class _StartGameViewState extends State<StartGameView> {
                 currentDifficulty = changedValue;
                 setState(() {
                   // difficulty;
-                  params.add('difficulty=$currentDifficulty'.toLowerCase());
                 });
               },
               value: currentDifficulty,
@@ -156,8 +200,6 @@ class _StartGameViewState extends State<StartGameView> {
           onChanged: (changedValue) {
             currentCategory = changedValue;
             setState(() {
-              params
-                  .add('category=' + Category.getCategoryPath(currentCategory));
               // print(changedValue);
             });
           },

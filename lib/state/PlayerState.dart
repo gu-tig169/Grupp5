@@ -7,11 +7,18 @@ class PlayerState extends ChangeNotifier {
 
   Player _currentUser;
 
+  PlayerState() {
+    _injectList();
+    notifyListeners();
+    print(_playerList);
+  }
+
   void setCurrentUser(String username) {
     _currentUser = _matchPlayerByUsername(username);
   }
 
   Player getCurrentUser() {
+    print('getcurrentuser har aktiverats!');
     return _currentUser;
   }
 
@@ -19,8 +26,9 @@ class PlayerState extends ChangeNotifier {
     _currentUser = null;
   }
 
-  void deletePlayer(String id) {
+  void deletePlayer(String id) async {
     RestService.deletePlayer(id);
+    this._playerList = await RestService.getPlayers();
     notifyListeners();
   }
 
@@ -45,18 +53,21 @@ class PlayerState extends ChangeNotifier {
 
     if (!exists) {
       RestService.registerPlayer(player);
+      RestService.getPlayers().then((value) => this._playerList = value);
       notifyListeners();
     }
+    // this._playerList = await RestService.getPlayers();
     return exists;
   }
 
   void _injectList() async {
     this._playerList = await RestService.getPlayers();
+    // print('injectlist som är på g');
     notifyListeners();
   }
 
   List<Player> getPlayers() {
-    _injectList();
-    return _playerList;
+    print('getPlayers har aktiverats!');
+    return this._playerList;
   }
 }

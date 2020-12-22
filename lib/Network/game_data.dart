@@ -6,13 +6,17 @@ import 'package:http/http.dart' as http;
 import 'package:triviaholic/model/Question.dart';
 
 class GameData {
-  static final String url =
-      'https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple';
+  static final String url = 'https://opentdb.com/api.php?type=multiple/';
 
-  // https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple
+  // glöm inte att fixa i category så att man inte kan välja flera kategorier, förslagsvis i loopen /kodarN Alban
 
-  static Future<List<Question>> getGameData() async {
-    http.Response response = await http.get(url);
+  static Future<List<Question>> getGameData(params) async {
+    String paramsToString = '';
+    params.forEach((value) => paramsToString = paramsToString + value + '& ');
+
+    print(url + paramsToString);
+
+    http.Response response = await http.get(url + paramsToString);
     List<Question> questions = [];
 
     var jsonResponse = response.body;

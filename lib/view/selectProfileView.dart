@@ -53,12 +53,14 @@ class SelectProfileView extends StatelessWidget {
                               style: TextStyle(fontSize: 22)),
                         ),
                       ]),
-                      value: userItem.username) // klura här sen
+                      value: userItem.username)
+                  // klura här sen
                   )
               .toList(),
           onChanged: (value) {
             Provider.of<PlayerState>(context, listen: false)
                 .setCurrentUser(value);
+            Navigator.pushNamed(context, '/start');
           },
           hint: Container(
             margin: EdgeInsets.only(left: 8.8),
@@ -73,11 +75,12 @@ class SelectProfileView extends StatelessWidget {
 
 Widget selectProfileText() {
   return Container(
-      child: Text(
-    'Select Profile',
-    style: TextStyle(
-        fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
-  ));
+    child: Text(
+      'Select Profile',
+      style: TextStyle(
+          fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
+    ),
+  );
 }
 
 Widget newProfileButton(context) {

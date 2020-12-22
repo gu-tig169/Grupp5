@@ -14,8 +14,11 @@ class StartGameView extends StatefulWidget {
 
 class _StartGameViewState extends State<StartGameView> {
   final List<String> difficultylist = ['Easy', 'Medium', 'Hard'];
-  int currentCategory = -1;
-  var _itemselected = 'Easy';
+
+  String currentDifficulty = 'Easy';
+  String currentCategory = 'Any';
+
+  List<String> params = [];
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +29,15 @@ class _StartGameViewState extends State<StartGameView> {
             children: [
               spaceBetween(100),
               homeText(),
+              spaceBetween(80),
+              dropDownTitle('Choose your difficulty'),
+              spaceBetween(5),
+              dropDownDifficulty(difficultylist),
               spaceBetween(30),
-              dropDownTitle(),
-              spaceBetween(20),
-              dropdownGenerator(difficultylist),
-              spaceBetween(30),
-              categoryDropDown(),
-              spaceBetween(130),
+              dropDownTitle('Choose your category'),
+              spaceBetween(5),
+              dropDownCategory(),
+              spaceBetween(50),
               startgameButton(context),
             ],
           ),
@@ -58,8 +63,8 @@ class _StartGameViewState extends State<StartGameView> {
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
-              GameData.getGameData();
-              //Navigator.pushNamed(context, '/game');
+              GameData.getGameData(params);
+              Navigator.pushNamed(context, '/game');
             }),
       ),
     );
@@ -76,7 +81,7 @@ class _StartGameViewState extends State<StartGameView> {
     );
   }
 
-  Widget dropdownGenerator(List<String> list) {
+  Widget dropDownDifficulty(List<String> list) {
     return Container(
         child: Container(
             margin: EdgeInsets.only(right: 1, left: 0),
@@ -94,43 +99,38 @@ class _StartGameViewState extends State<StartGameView> {
               items: list
                   .map((dropdownitem) => DropdownMenuItem(
                         value: dropdownitem,
-                        child: Row(
-                          children: [
-                            Container(width: 6),
-                            //Icon(Icons.question_answer),
-                            Container(
-                              width: 10,
-                            ),
-                            Text(
-                              dropdownitem,
-                              style: TextStyle(fontSize: 22),
-                            ),
-                          ],
+                        child: Container(
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            dropdownitem,
+                            style: TextStyle(fontSize: 22),
+                          ),
                         ),
-                        //value: avatar,
                       ))
                   .toList(),
-              onChanged: (String newValueSelected) {
+              onChanged: (String changedValue) {
+                currentDifficulty = changedValue;
                 setState(() {
-                  _itemselected = newValueSelected;
+                  // difficulty;
+                  params.add('difficulty=$currentDifficulty'.toLowerCase());
                 });
               },
-              value: _itemselected,
+              value: currentDifficulty,
             ))));
   }
 
-  Widget dropDownTitle() {
+  Widget dropDownTitle(String text) {
     return Container(
       child: Text(
-        'Choose your difficulty and category',
-        style: TextStyle(fontWeight: FontWeight.w500),
+        text,
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
       ),
     );
   }
 
-  Widget categoryDropDown() {
+  Widget dropDownCategory() {
     return Container(
-        margin: EdgeInsets.only(right: 90, left: 90),
+        margin: EdgeInsets.only(right: 50, left: 50),
         decoration: ShapeDecoration(
             color: nyanza,
             shape: RoundedRectangleBorder(
@@ -142,20 +142,23 @@ class _StartGameViewState extends State<StartGameView> {
           dropdownColor: nyanza,
           items: Category.categories
               .map((category) => DropdownMenuItem(
-                    child: Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Text(
-                        category.category,
-                        style: TextStyle(fontSize: 22),
+                    child: Center(
+                      child: Container(
+                        child: Text(
+                          category.category,
+                          style: TextStyle(fontSize: 22),
+                        ),
                       ),
                     ),
-                    value: category.categorypath,
+                    value: category.category,
                   ))
               .toList(),
-          onChanged: (value) {
+          onChanged: (changedValue) {
+            currentCategory = changedValue;
             setState(() {
-              currentCategory = value;
-              print(value);
+              params
+                  .add('category=' + Category.getCategoryPath(currentCategory));
+              // print(changedValue);
             });
           },
           value: currentCategory,

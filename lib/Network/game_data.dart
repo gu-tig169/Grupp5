@@ -7,19 +7,19 @@ import 'package:triviaholic/model/Question.dart';
 
 class GameData {
   static final String url =
-      'https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple';
+      'https://opentdb.com/api.php?amount=15&type=multiple&';
 
-  // https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple
+  static Future<List<Question>> getGameData(params) async {
+    String paramsToString = '';
+    params.forEach((value) => paramsToString = paramsToString + value + '&');
 
-  static Future<List<Question>> getGameData() async {
-    http.Response response = await http.get(url);
+    http.Response response = await http.get(url + paramsToString);
     List<Question> questions = [];
 
     var jsonResponse = response.body;
     var responseBody = jsonDecode(jsonResponse)['results'];
 
     for (var question in responseBody) {
-      print(question);
       List<Answer> answers = [];
       for (var incorrectAnswer in question['incorrect_answers']) {
         answers.add(Answer(incorrectAnswer, false));
@@ -27,9 +27,7 @@ class GameData {
       answers.add(Answer(question['correct_answer'], true));
       questions.add(Question(question['question'], answers));
     }
-    for (var i in questions) {
-      print(i.question);
-    }
+
     return questions;
   }
 }

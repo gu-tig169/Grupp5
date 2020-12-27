@@ -39,4 +39,16 @@ class Category {
   int get categorypath {
     return _categorypath;
   }
+
+  //kolla kategorinamnet och ge oss pathet (numrerna i API:t)
+  static String getCategoryPath(String categoryName) {
+    String path = '';
+    categories.forEach((element) {
+      if (categoryName == element.category) {
+        path = element.categorypath.toString();
+        return;
+      }
+    });
+    return path;
+  }
 }

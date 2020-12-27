@@ -1,11 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/GameRound.dart';
+import 'package:triviaholic/model/Question.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
+import 'package:triviaholic/Network/game_data.dart';
 
-class GameBoardView extends StatelessWidget {
-  final List<String> choices = ['Stockholm', 'Göteborg', 'Åmål', 'Kungälv'];
+class GameBoardView extends StatefulWidget {
+  int currentQuestion = 0;
+  GameRound gameData;
+  GameBoardView({this.gameData});
+
+  @override
+  _GameBoardViewState createState() => _GameBoardViewState();
+}
+
+class _GameBoardViewState extends State<GameBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +40,10 @@ class GameBoardView extends StatelessWidget {
     return Center(
       child: Container(
           child: Text(
-        'Vad är Svea rikes huvudstad?',
-        style: TextStyle(fontSize: 38),
+        //gameData.questions[0].questions,
+        widget.gameData.questions[widget.currentQuestion].question,
+
+        style: TextStyle(fontSize: 22),
         textAlign: TextAlign.center,
       )),
     );
@@ -38,7 +51,7 @@ class GameBoardView extends StatelessWidget {
 
   Widget _generateAnswerButtons() {
     return Column(
-      children: choices
+      children: widget.gameData.questions[widget.currentQuestion].answers
           .asMap()
           .entries
           .map((entry) => (entry.key % 2 == 0)
@@ -48,7 +61,11 @@ class GameBoardView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       for (var i = entry.key; i < entry.key + 2; i++)
-                        _answerButton(choices[i]),
+                        _answerButton(
+                            widget.gameData.questions[widget.currentQuestion]
+                                .answers[i].title,
+                            widget.gameData.questions[widget.currentQuestion]
+                                .answers[i].correctAnswer)
                     ],
                   ),
                 )
@@ -57,7 +74,7 @@ class GameBoardView extends StatelessWidget {
     );
   }
 
-  Widget _answerButton(String question) {
+  Widget _answerButton(String answer, bool correctAnswer) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: SizedBox(
@@ -68,10 +85,23 @@ class GameBoardView extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
             color: customPink,
             child: Text(
-              question,
+              answer,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              setState(() {
+                print(correctAnswer);
+                widget.currentQuestion++;
+                widget.currentQuestion > widget.gameData.questions.length - 1
+                    ? Navigator.pushNamed(context, '/endscreen')
+                    : null;
+                correctAnswer
+                    ? widget.gameData.players.score =
+                        widget.gameData.players.score + 10
+                    : widget.gameData.players.score =
+                        widget.gameData.players.score - 10;
+              });
+            }),
       ),
     );
   }

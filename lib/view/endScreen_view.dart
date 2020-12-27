@@ -1,24 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
+import 'package:provider/provider.dart';
 
-class EndScreenView extends StatefulWidget {
-  @override
-  _EndScreenViewState createState() => _EndScreenViewState();
-}
-
-class _EndScreenViewState extends State<EndScreenView> {
+class EndScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Player player =
+        Provider.of<PlayerState>(context, listen: false).getCurrentUser();
     return Scaffold(
       body: Center(
         child: Gradienter(
           widget: Column(
             children: [
               aftergameText(),
-              aftergameScore(),
-              appButton('Restart', context),
+              aftergameScore(player),
               appButton('Main Menu', context),
               appButton('Leaderboard', context),
             ],
@@ -40,12 +39,12 @@ class _EndScreenViewState extends State<EndScreenView> {
     );
   }
 
-  Widget aftergameScore() {
+  Widget aftergameScore(Player player) {
     return Container(
       margin: EdgeInsets.only(top: 100, bottom: 60),
       alignment: Alignment.center,
       child: Text(
-        '100 p',
+        player.score.toString(),
         style: TextStyle(fontSize: 69, fontWeight: FontWeight.w800),
       ),
     );
@@ -67,7 +66,15 @@ class _EndScreenViewState extends State<EndScreenView> {
               text,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              switch (text) {
+                case 'Main Menu':
+                  return Navigator.pushNamed(context, '/start');
+                case 'Leaderboard':
+                  return Navigator.pushNamed(context, '/leaderboard');
+                default:
+              }
+            }),
       ),
     );
   }

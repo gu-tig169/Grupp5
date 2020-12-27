@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:triviaholic/Network/game_data.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Category.dart';
+import 'package:triviaholic/model/GameRound.dart';
+import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/model/Question.dart';
+import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
+import 'package:provider/provider.dart';
 
 class StartGameView extends StatefulWidget {
   @override
@@ -65,6 +69,8 @@ class _StartGameViewState extends State<StartGameView> {
             ),
             onPressed: () async {
               List<Question> questions = [];
+              Player player = Provider.of<PlayerState>(context, listen: false)
+                  .getCurrentUser();
               if (currentCategory != 'Any') {
                 params.add(
                     'category=' + Category.getCategoryPath(currentCategory));
@@ -76,9 +82,13 @@ class _StartGameViewState extends State<StartGameView> {
 
               await GameData.getGameData(params)
                   .then((value) => questions = value);
-              print(questions.length);
               questions.length >= 1
-                  ? Navigator.pushNamed(context, '/game')
+                  ? Navigator.pushNamed(context, "/game",
+                      arguments: GameRound(
+                          questions: questions,
+                          difficulty: currentDifficulty,
+                          category: currentCategory,
+                          players: player))
                   : alertNotEnoughQuestions(context);
               params = [];
             }),

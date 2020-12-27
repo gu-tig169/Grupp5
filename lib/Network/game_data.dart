@@ -13,8 +13,6 @@ class GameData {
     String paramsToString = '';
     params.forEach((value) => paramsToString = paramsToString + value + '&');
 
-    print(url + paramsToString);
-
     http.Response response = await http.get(url + paramsToString);
     List<Question> questions = [];
 
@@ -22,7 +20,6 @@ class GameData {
     var responseBody = jsonDecode(jsonResponse)['results'];
 
     for (var question in responseBody) {
-      //print(question);
       List<Answer> answers = [];
       for (var incorrectAnswer in question['incorrect_answers']) {
         answers.add(Answer(incorrectAnswer, false));
@@ -30,9 +27,7 @@ class GameData {
       answers.add(Answer(question['correct_answer'], true));
       questions.add(Question(question['question'], answers));
     }
-    for (var i in questions) {
-      //print(i.question);
-    }
+
     return questions;
   }
 }

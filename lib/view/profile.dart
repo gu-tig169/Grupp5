@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/model/ProfileImage.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
+  @override
+  _ProfileViewState createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  ProfileImage newImage;
+
   @override
   Widget build(BuildContext context) {
     Player currentUser =
@@ -19,11 +28,12 @@ class ProfileView extends StatelessWidget {
             children: [
               _profileTitle(currentUser.username),
               spaceBetween(70),
-              _profilePicture(currentUser.image),
+              profileImage(currentUser),
               spaceBetween(20),
+              dropDown(),
               _profileInfo(currentUser.bestScore),
               spaceBetween(50),
-              _editProfileButton(),
+              _editProfileButton(currentUser),
               spaceBetween(15),
               _deleteButton(context, currentUser),
             ],
@@ -34,13 +44,23 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _profilePicture(String image) {
-    return Container(
-      child: CircleAvatar(
-        backgroundImage: AssetImage(image),
-        radius: 50,
-      ),
-    );
+  // Widget _profilePicture(String image) {
+  //   return Container(
+  //     child: CircleAvatar(
+  //       backgroundImage: AssetImage(image),
+  //       radius: 50,
+  //     ),
+  //   );
+  // }
+
+  Widget profileImage(Player currentUser) {
+    return Center(
+        child: CircleAvatar(
+      radius: 50,
+      backgroundImage: (newImage == null)
+          ? AssetImage(currentUser.image)
+          : AssetImage(newImage.path),
+    ));
   }
 
   Widget spaceBetween(double height) {
@@ -65,7 +85,7 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _editProfileButton() {
+  Widget _editProfileButton(Player currentUser) {
     return Container(
       child: SizedBox(
         width: 200,
@@ -76,15 +96,20 @@ class ProfileView extends StatelessWidget {
               borderRadius: BorderRadius.circular(17),
             ),
             child: Text(
-              'Edit',
+              'Save',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {}),
+            onPressed: () {
+              currentUser.image = newImage.path;
+              Provider.of<PlayerState>(context, listen: false)
+                  .editPlayer(currentUser);
+              Navigator.pushNamed(context, "/");
+            }),
       ),
     );
   }
 
-  Widget _deleteButton(BuildContext context, Player playerToDelete) {
+  Widget _deleteButton(BuildContext context, Player deletedUser) {
     return Container(
       child: SizedBox(
         width: 100,
@@ -100,9 +125,7 @@ class ProfileView extends StatelessWidget {
             ),
             onPressed: () {
               Provider.of<PlayerState>(context, listen: false)
-                  .deletePlayer(playerToDelete.id);
-              Provider.of<PlayerState>(context, listen: false)
-                  .clearCurrentUser();
+                  .deletePlayer(deletedUser.id);
               Navigator.pushNamed(context, "/");
             }),
       ),
@@ -117,5 +140,46 @@ class ProfileView extends StatelessWidget {
         style: TextStyle(fontSize: 42),
       ),
     );
+  }
+
+  Widget dropDown() {
+    return Container(
+        margin: EdgeInsets.only(right: 40, left: 40),
+        decoration: ShapeDecoration(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    width: 2, style: BorderStyle.solid, color: turquoiseGreen),
+                borderRadius: BorderRadius.circular(20))),
+        child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+          items: ProfileImage.images
+              .map((image) => DropdownMenuItem(
+                    child: Row(
+                      children: [
+                        Container(width: 6),
+                        CircleAvatar(backgroundImage: AssetImage(image.path)),
+                        Container(
+                          width: 10,
+                        ),
+                        Text(
+                          image.title,
+                          style: TextStyle(fontSize: 22),
+                        ),
+                      ],
+                    ),
+                    value: image,
+                  ))
+              .toList(),
+          onChanged: (value) {
+            setState(() {
+              newImage = value;
+              print(value);
+            });
+          },
+          value: newImage,
+          hint: Text('Choose avatar'),
+          isExpanded: true,
+        )));
   }
 }

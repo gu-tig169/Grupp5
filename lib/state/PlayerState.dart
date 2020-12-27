@@ -33,6 +33,11 @@ class PlayerState extends ChangeNotifier {
     notifyListeners();
   }
 
+  editPlayer(Player player) {
+    RestService.editPlayer(player);
+    notifyListeners();
+  }
+
   Player _matchPlayerByUsername(String username) {
     Player player;
     _playerList.forEach((existingPlayer) {

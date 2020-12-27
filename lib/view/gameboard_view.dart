@@ -90,16 +90,15 @@ class _GameBoardViewState extends State<GameBoardView> {
             ),
             onPressed: () {
               setState(() {
-                print(widget.gameData.players.currentScore);
+                print(correctAnswer);
                 widget.currentQuestion++;
-                widget.currentQuestion > widget.gameData.questions.length - 1
-                    ? Navigator.pushNamed(context, '/endscreen')
-                    : null;
                 correctAnswer
                     ? widget.gameData.players.currentScore =
                         widget.gameData.players.currentScore + 10
-                    : widget.gameData.players.currentScore =
-                        widget.gameData.players.currentScore - 10;
+                    : null;
+                widget.currentQuestion > widget.gameData.questions.length - 1
+                    ? Navigator.pushNamed(context, '/endscreen')
+                    : null;
               });
             }),
       ),

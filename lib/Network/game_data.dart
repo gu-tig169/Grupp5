@@ -25,6 +25,7 @@ class GameData {
         answers.add(Answer(incorrectAnswer, false));
       }
       answers.add(Answer(question['correct_answer'], true));
+      answers.shuffle();
       questions.add(Question(question['question'], answers));
     }
 

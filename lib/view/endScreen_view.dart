@@ -11,6 +11,11 @@ class EndScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player =
         Provider.of<PlayerState>(context, listen: false).getCurrentUser();
+    player.currentScore > player.bestScore
+        ? player.bestScore = player.currentScore
+        : null;
+    Provider.of<PlayerState>(context, listen: false).editPlayer(player);
+
     return Scaffold(
       body: Center(
         child: Gradienter(

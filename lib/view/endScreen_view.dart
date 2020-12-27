@@ -44,7 +44,7 @@ class EndScreenView extends StatelessWidget {
       margin: EdgeInsets.only(top: 100, bottom: 60),
       alignment: Alignment.center,
       child: Text(
-        player.score.toString(),
+        player.currentScore.toString(),
         style: TextStyle(fontSize: 69, fontWeight: FontWeight.w800),
       ),
     );

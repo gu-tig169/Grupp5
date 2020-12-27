@@ -16,7 +16,6 @@ class RestService {
       body: jsonEncode(<String, dynamic>{
         "username": player.username,
         "amountOfGames": player.amountOfGames,
-        "averageScore": player.averageScore,
         "bestScore": player.bestScore,
         "image": player.image,
         "currentScore": player.currentScore
@@ -50,7 +49,6 @@ class RestService {
       body: jsonEncode(<String, dynamic>{
         "username": player.username,
         "amountOfGames": player.amountOfGames,
-        "averageScore": player.averageScore,
         "bestScore": player.bestScore,
         "image": player.image,
         "currentScore": player.currentScore
@@ -70,11 +68,11 @@ class RestService {
           id: key,
           username: value['username'],
           amountOfGames: value['amountOfGames'],
-          averageScore: value['averageScore'],
           bestScore: value['bestScore'],
           image: value['image'],
           currentScore: value['currentScore'],
         ));
+        print("currentScore:" + value["currentScore"].toString());
       },
     );
 

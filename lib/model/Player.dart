@@ -4,7 +4,7 @@ class Player {
   int amountOfGames;
   int bestScore;
   String image;
-  int score;
+  int currentScore;
 
   Player({
     this.id,
@@ -12,11 +12,6 @@ class Player {
     this.amountOfGames = 0,
     this.bestScore = 0,
     this.image,
-    this.score = 0,
+    this.currentScore = 0,
   });
-
-  int currentScore;
-
-
-
 }

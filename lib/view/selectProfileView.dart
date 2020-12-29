@@ -6,6 +6,9 @@ import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
+
+
+
 class SelectProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,12 +17,14 @@ class SelectProfileView extends StatelessWidget {
         child: Gradienter(
           widget: Column(
             children: [
-              spaceBetween(130),
+              spaceBetween(20),
+              appLogo(),
+              spaceBetween(10),
               selectProfileText(),
               Consumer<PlayerState>(
                   builder: (context, state, child) =>
                       profileDropDown(state.getPlayers(), context)),
-              spaceBetween(40),
+              spaceBetween(10),
               newProfileButton(context),
             ],
           ),
@@ -31,7 +36,7 @@ class SelectProfileView extends StatelessWidget {
 
   Widget profileDropDown(List<Player> list, BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(top: 20, left: 40, right: 40),
+        margin: EdgeInsets.only(top: 10, left: 40, right: 40),
         decoration: BoxDecoration(
             border: Border.all(width: 1.5, color: brunsWickGreen),
             borderRadius: BorderRadius.all(Radius.circular(20.0))),
@@ -48,7 +53,7 @@ class SelectProfileView extends StatelessWidget {
               .map((userItem) => DropdownMenuItem<String>(
                       child: Row(children: [
                         Container(
-                          margin: EdgeInsets.only(left: 8.8),
+                          margin: EdgeInsets.only(left: 8.8,),
                           child: Text(userItem.username.toString(),
                               style: TextStyle(fontSize: 22)),
                         ),
@@ -63,18 +68,29 @@ class SelectProfileView extends StatelessWidget {
             Navigator.pushNamed(context, '/start');
           },
           hint: Container(
-            margin: EdgeInsets.only(left: 8.8),
-            child: (Text(
+            margin: EdgeInsets.only(left: 8.8,),
+            child: (Text (
               'Choose profile',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: TextStyle(fontStyle: FontStyle.italic),
             )),
           ),
         ));
   }
 }
 
+Widget appLogo () {
+  return Center(
+    child: Image.asset(
+      'assets/logoholic.png',
+      width: 200,
+      height: 150,
+    )
+    );
+}
+
 Widget selectProfileText() {
   return Container(
+    margin: EdgeInsets.only(bottom: 50, top: 50),
     child: Text(
       'Select Profile',
       style: TextStyle(
@@ -85,7 +101,7 @@ Widget selectProfileText() {
 
 Widget newProfileButton(context) {
   return Container(
-    margin: EdgeInsets.only(bottom: 50, top: 130),
+    margin: EdgeInsets.only(bottom: 50, top: 100),
     alignment: Alignment.bottomCenter,
     child: SizedBox(
       width: 250,
@@ -104,6 +120,7 @@ Widget newProfileButton(context) {
           }),
     ),
   );
+
 }
 
 Widget spaceBetween(double height) {

@@ -11,6 +11,7 @@ class ProfileImage {
     ProfileImage('Lukas', 'assets/blondehairman.png'),
     ProfileImage('Jack', 'assets/manwitheyepatch.png'),
     ProfileImage('Dennis', 'assets/redhairman.png'),
+    ProfileImage('Logo','assets/logoholic.png'),
   ];
 
   String get title {

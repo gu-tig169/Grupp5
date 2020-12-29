@@ -15,8 +15,8 @@ class GameBoardView extends StatefulWidget {
   @override
   _GameBoardViewState createState() => _GameBoardViewState();
 }
-
-class _GameBoardViewState extends State<GameBoardView> {
+class _GameBoardViewState extends State<GameBoardView> { 
+  Color _buttonColor1 = customPink;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +73,11 @@ class _GameBoardViewState extends State<GameBoardView> {
           .toList(),
     );
   }
-
-  Widget _answerButton(String answer, bool correctAnswer) {
+  // Metot för att sätta färgen?
+void resetbuttonColor () { 
+    _buttonColor1 = customPink;
+  }
+  Widget _answerButton(String answer, bool correctAnswer) { 
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: SizedBox(
@@ -83,14 +86,21 @@ class _GameBoardViewState extends State<GameBoardView> {
         child: RaisedButton(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-            color: customPink,
+            color: _buttonColor1,
             child: Text(
               answer,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
               setState(() {
-                print(correctAnswer);
+                // If-Statement för att byta färg på knappen vid rätt svar?
+                if (correctAnswer == true) {
+                  _buttonColor1 = Colors.green;
+                } else {
+                  _buttonColor1 = Colors.red;
+                } 
+              //  
+              print(correctAnswer);
                 widget.currentQuestion++;
                 correctAnswer
                     ? widget.gameData.players.currentScore =
@@ -99,6 +109,7 @@ class _GameBoardViewState extends State<GameBoardView> {
                 widget.currentQuestion > widget.gameData.questions.length - 1
                     ? Navigator.pushNamed(context, '/endscreen')
                     : null;
+
               });
             }),
       ),

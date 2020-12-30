@@ -70,7 +70,7 @@ class RestService {
           amountOfGames: value['amountOfGames'],
           bestScore: value['bestScore'],
           image: value['image'],
-          currentScore: value['currentScore'],
+          //   currentScore: value['currentScore'],
         ));
         print("currentScore:" + value["currentScore"].toString());
       },

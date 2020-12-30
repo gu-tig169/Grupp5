@@ -6,9 +6,6 @@ import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
-
-
-
 class SelectProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,14 +14,14 @@ class SelectProfileView extends StatelessWidget {
         child: Gradienter(
           widget: Column(
             children: [
-              spaceBetween(20),
+              spaceBetween(41),
               appLogo(),
-              spaceBetween(10),
+              //  spaceBetween(),
               selectProfileText(),
               Consumer<PlayerState>(
                   builder: (context, state, child) =>
                       profileDropDown(state.getPlayers(), context)),
-              spaceBetween(10),
+              // spaceBetween(10),
               newProfileButton(context),
             ],
           ),
@@ -53,7 +50,9 @@ class SelectProfileView extends StatelessWidget {
               .map((userItem) => DropdownMenuItem<String>(
                       child: Row(children: [
                         Container(
-                          margin: EdgeInsets.only(left: 8.8,),
+                          margin: EdgeInsets.only(
+                            left: 8.8,
+                          ),
                           child: Text(userItem.username.toString(),
                               style: TextStyle(fontSize: 22)),
                         ),
@@ -68,8 +67,10 @@ class SelectProfileView extends StatelessWidget {
             Navigator.pushNamed(context, '/start');
           },
           hint: Container(
-            margin: EdgeInsets.only(left: 8.8,),
-            child: (Text (
+            margin: EdgeInsets.only(
+              left: 8.8,
+            ),
+            child: (Text(
               'Choose profile',
               style: TextStyle(fontStyle: FontStyle.italic),
             )),
@@ -78,14 +79,12 @@ class SelectProfileView extends StatelessWidget {
   }
 }
 
-Widget appLogo () {
+Widget appLogo() {
   return Center(
-    child: Image.asset(
-      'assets/logoholic.png',
-      width: 200,
-      height: 150,
-    )
-    );
+      child: CircleAvatar(
+    radius: 70,
+    backgroundImage: AssetImage('assets/triviaholic_logo.png'),
+  ));
 }
 
 Widget selectProfileText() {
@@ -120,7 +119,6 @@ Widget newProfileButton(context) {
           }),
     ),
   );
-
 }
 
 Widget spaceBetween(double height) {

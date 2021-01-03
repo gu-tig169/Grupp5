@@ -15,9 +15,15 @@ class GameData {
 
     http.Response response = await http.get(url + paramsToString);
     List<Question> questions = [];
+    // var fixedJsonResponse = jsonResponse.replaceAll("&quot;", "'")
 
     var jsonResponse = response.body;
-    var responseBody = jsonDecode(jsonResponse)['results'];
+    var responseBody = jsonDecode(jsonResponse
+        .replaceAll("&#039;", "'")
+        .replaceAll("&quot;", "'")
+        .replaceAll("&amp;", "&")
+        .replaceAll("&oacute", "ó")
+        .replaceAll("&Uuml", "Ü"))['results'];
 
     for (var question in responseBody) {
       List<Answer> answers = [];

@@ -15,7 +15,8 @@ class GameBoardView extends StatefulWidget {
   @override
   _GameBoardViewState createState() => _GameBoardViewState();
 }
-class _GameBoardViewState extends State<GameBoardView> { 
+
+class _GameBoardViewState extends State<GameBoardView> {
   Color _buttonColor1 = customPink;
   @override
   Widget build(BuildContext context) {
@@ -73,11 +74,13 @@ class _GameBoardViewState extends State<GameBoardView> {
           .toList(),
     );
   }
+
   // Metot för att sätta färgen?
-void resetbuttonColor () { 
+  void resetbuttonColor() {
     _buttonColor1 = customPink;
   }
-  Widget _answerButton(String answer, bool correctAnswer) { 
+
+  Widget _answerButton(String answer, bool correctAnswer) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: SizedBox(
@@ -98,9 +101,9 @@ void resetbuttonColor () {
                   _buttonColor1 = Colors.green;
                 } else {
                   _buttonColor1 = Colors.red;
-                } 
-              //  
-              print(correctAnswer);
+                }
+                //
+                print(correctAnswer);
                 widget.currentQuestion++;
                 correctAnswer
                     ? widget.gameData.players.currentScore =
@@ -109,7 +112,6 @@ void resetbuttonColor () {
                 widget.currentQuestion > widget.gameData.questions.length - 1
                     ? Navigator.pushNamed(context, '/endscreen')
                     : null;
-
               });
             }),
       ),

@@ -23,7 +23,8 @@ class GameData {
         .replaceAll("&quot;", "'")
         .replaceAll("&amp;", "&")
         .replaceAll("&oacute", "ó")
-        .replaceAll("&Uuml", "Ü"))['results'];
+        .replaceAll("&Uuml", "Ü")
+        .replaceAll("&shy;", "-"))['results'];
 
     for (var question in responseBody) {
       List<Answer> answers = [];

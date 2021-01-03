@@ -76,4 +76,9 @@ class PlayerState extends ChangeNotifier {
     print('getPlayers har aktiverats!');
     return this._playerList;
   }
+
+  List<Player> sortbyScore() {
+    _playerList.sort();
+    return _playerList;
+  }
 }

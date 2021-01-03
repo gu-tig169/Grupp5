@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/state/PlayerState.dart';
+import 'package:triviaholic/model/Player.dart';
 
-class LeaderboardView extends StatefulWidget {
-  @override
-  _LeaderboardViewState createState() => _LeaderboardViewState();
-}
-
-class _LeaderboardViewState extends State<LeaderboardView> {
-  final list = ['Sverre', 'Klabbe', 'Klasse'];
-
-  final List<String> _filterList = ['Easy', 'Medium', 'Hard'];
-  // String _filterValue = 'All';
-
+class LeaderboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,45 +13,34 @@ class _LeaderboardViewState extends State<LeaderboardView> {
         centerTitle: true,
         backgroundColor: illuminatingEmerald,
         title: Text('Leaderboard'),
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: (String value) {
-              setState(() {
-                //  _filterValue = value;
-              });
-            },
-            itemBuilder: (BuildContext context) {
-              return _filterList
-                  .map((filter) =>
-                      PopupMenuItem(value: filter, child: Text(filter)))
-                  .toList();
-            },
-          )
-        ],
       ),
-      body: Center(child: listViewWidget()),
+      body: Center(
+        child: Consumer<PlayerState>(
+            builder: (context, state, child) =>
+                listViewWidget(state.sortbyScore())),
+      ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  Widget listViewWidget() {
+  Widget listViewWidget(List<Player> list) {
     return ListView.builder(
       itemCount: list.length,
-      itemBuilder: (context, index) => _listItem(list[index], context),
+      itemBuilder: (context, index) => _listItem(
+          list[index].username, list[index].image, list[index].bestScore),
     );
   }
 
-  Widget _listItem(list, context) {
+  Widget _listItem(String username, String image, int bestScore) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 0),
         child: Card(
             child: ListTile(
           leading: CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://cdn.dribbble.com/users/499731/screenshots/3435273/proff.png'),
+            backgroundImage: AssetImage(image),
           ),
-          title: Text(list),
-          trailing: Text('10 ynkliga poäng'),
+          title: Text(username),
+          trailing: Text(bestScore.toString()),
         )));
   }
 }

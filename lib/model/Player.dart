@@ -1,4 +1,4 @@
-class Player {
+class Player implements Comparable<Player> {
   String id;
   String username;
   int amountOfGames;
@@ -14,4 +14,14 @@ class Player {
     this.image,
     this.currentScore = 0,
   });
+
+  @override
+  int compareTo(Player a) {
+    if (a.bestScore > this.bestScore) {
+      return 1;
+    } else if (a.bestScore < this.bestScore) {
+      return -1;
+    }
+    return 0;
+  }
 }

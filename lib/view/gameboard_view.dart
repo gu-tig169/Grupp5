@@ -6,11 +6,13 @@ import 'package:triviaholic/model/Question.dart';
 import 'package:triviaholic/view/selectProfileView.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/Network/game_data.dart';
+import 'dart:async';
 
 class GameBoardView extends StatefulWidget {
   int currentQuestion = 0;
   GameRound gameData;
   GameBoardView({this.gameData});
+  bool hasAnsweredQuestion = false;
 
   @override
   _GameBoardViewState createState() => _GameBoardViewState();
@@ -18,6 +20,7 @@ class GameBoardView extends StatefulWidget {
 
 class _GameBoardViewState extends State<GameBoardView> {
   Color _buttonColor1 = customPink;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,11 +78,6 @@ class _GameBoardViewState extends State<GameBoardView> {
     );
   }
 
-  // Metot för att sätta färgen?
-  void resetbuttonColor() {
-    _buttonColor1 = customPink;
-  }
-
   Widget _answerButton(String answer, bool correctAnswer) {
     return Container(
       margin: EdgeInsets.only(right: 10),
@@ -89,29 +87,33 @@ class _GameBoardViewState extends State<GameBoardView> {
         child: RaisedButton(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(17)),
-            color: _buttonColor1,
+            color: !widget.hasAnsweredQuestion
+                ? _buttonColor1
+                : correctAnswer
+                    ? Colors.green
+                    : Colors.red,
             child: Text(
               answer,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
               setState(() {
-                // If-Statement för att byta färg på knappen vid rätt svar?
-                if (correctAnswer == true) {
-                  _buttonColor1 = Colors.green;
-                } else {
-                  _buttonColor1 = Colors.red;
-                }
-                //
-                print(correctAnswer);
-                widget.currentQuestion++;
-                correctAnswer
-                    ? widget.gameData.players.currentScore =
-                        widget.gameData.players.currentScore + 10
-                    : null;
-                widget.currentQuestion > widget.gameData.questions.length - 1
-                    ? Navigator.pushNamed(context, '/endscreen')
-                    : null;
+                widget.hasAnsweredQuestion = true;
+              });
+              Future.delayed(Duration(seconds: 2), () {
+                setState(() {
+                  print(correctAnswer);
+
+                  correctAnswer
+                      ? widget.gameData.players.currentScore =
+                          widget.gameData.players.currentScore + 10
+                      : null;
+
+                  widget.currentQuestion > widget.gameData.questions.length - 2
+                      ? Navigator.pushNamed(context, '/endscreen')
+                      : widget.currentQuestion++;
+                });
+                widget.hasAnsweredQuestion = false;
               });
             }),
       ),

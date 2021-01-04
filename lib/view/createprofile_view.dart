@@ -179,7 +179,6 @@ class _CreateProfileViewState extends State<CreateProfileView> {
               (userNameExists)
                   ? alertUserExists(context)
                   : Navigator.pushNamed(context, '/start');
-              ;
             }),
       ),
     );

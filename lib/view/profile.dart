@@ -126,6 +126,7 @@ class _ProfileViewState extends State<ProfileView> {
             onPressed: () {
               Provider.of<PlayerState>(context, listen: false)
                   .deletePlayer(deletedUser.id);
+
               Navigator.pushNamed(context, "/");
             }),
       ),

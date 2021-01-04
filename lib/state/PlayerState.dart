@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:triviaholic/Network/rest_service.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/model/Question.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class PlayerState extends ChangeNotifier {
   List<Player> _playerList = [];
@@ -11,15 +13,18 @@ class PlayerState extends ChangeNotifier {
   PlayerState() {
     _injectList();
     notifyListeners();
-    print(_playerList);
   }
 
-  void setCurrentUser(String username) {
-    _currentUser = _matchPlayerByUsername(username);
+  bool setCurrentUser(String username, String password) {
+    _currentUser = _matchPlayerByUsernameAndPassword(username, password);
+    if (_currentUser == null) {
+      return false;
+    }
+
+    return true;
   }
 
   Player getCurrentUser() {
-    print('getcurrentuser har aktiverats!');
     return _currentUser;
   }
 
@@ -38,10 +43,14 @@ class PlayerState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Player _matchPlayerByUsername(String username) {
+  Player _matchPlayerByUsernameAndPassword(String username, String password) {
     Player player;
+    var bytes = utf8.encode(password);
+    var digest = sha256.convert(bytes);
+    print(digest);
     _playerList.forEach((existingPlayer) {
-      if (username == existingPlayer.username) {
+      if (username == existingPlayer.username &&
+          digest.toString() == existingPlayer.password) {
         player = existingPlayer;
       }
     });
@@ -58,22 +67,24 @@ class PlayerState extends ChangeNotifier {
     });
 
     if (!exists) {
+      var password = player.password;
+      var bytes = utf8.encode(password);
+      var digest = sha256.convert(bytes);
+      player.password = digest;
       RestService.registerPlayer(player);
+      _playerList.add(player);
       RestService.getPlayers().then((value) => this._playerList = value);
       notifyListeners();
     }
-    // this._playerList = await RestService.getPlayers();
     return exists;
   }
 
   void _injectList() async {
     this._playerList = await RestService.getPlayers();
-    // print('injectlist som är på g');
     notifyListeners();
   }
 
   List<Player> getPlayers() {
-    print('getPlayers har aktiverats!');
     return this._playerList;
   }
 

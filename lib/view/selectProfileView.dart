@@ -7,23 +7,32 @@ import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
 class SelectProfileView extends StatelessWidget {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Gradienter(
-          widget: Column(
-            children: [
-              spaceBetween(41),
-              appLogo(),
-              //  spaceBetween(),
-              selectProfileText(),
-              Consumer<PlayerState>(
-                  builder: (context, state, child) =>
-                      profileDropDown(state.getPlayers(), context)),
-              // spaceBetween(10),
-              newProfileButton(context),
-            ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Gradienter(
+            widget: Column(
+              children: [
+                spaceBetween(52),
+                appLogo(),
+                //  spaceBetween(),
+                selectProfileText(),
+                usernameTextField("Enter your username.", usernameController),
+                passwordTextField("Enter your password.", passwordController),
+                // spaceBetween(10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    loginButton(context, "Sign in"),
+                    newProfileButton(context, "Create User"),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -63,7 +72,7 @@ class SelectProfileView extends StatelessWidget {
               .toList(),
           onChanged: (value) {
             Provider.of<PlayerState>(context, listen: false)
-                .setCurrentUser(value);
+                .setCurrentUser(value, "password");
             Navigator.pushNamed(context, '/start');
           },
           hint: Container(
@@ -77,48 +86,155 @@ class SelectProfileView extends StatelessWidget {
           ),
         ));
   }
-}
 
-Widget appLogo() {
-  return Center(
-      child: CircleAvatar(
-    radius: 70,
-    backgroundImage: AssetImage('assets/triviaholic_logo.png'),
-  ));
-}
+  Widget usernameTextField(String hint, TextEditingController controller) {
+    return Container(
+      //decoration: BoxDecoration(color: Colors.white),
+      margin: EdgeInsets.only(
+        right: 40,
+        left: 40,
+        bottom: 10,
+      ),
+      child: TextField(
+        obscureText: false,
+        controller: controller,
+        decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            hintText: hint,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: 2, color: turquoiseGreen)),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: 4, color: turquoiseGreen))),
+      ),
+    );
+  }
 
-Widget selectProfileText() {
-  return Container(
-    margin: EdgeInsets.only(bottom: 50, top: 50),
-    child: Text(
-      'Select Profile',
-      style: TextStyle(
-          fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
-    ),
-  );
-}
+  Widget passwordTextField(String hint, TextEditingController controller) {
+    return Container(
+      //decoration: BoxDecoration(color: Colors.white),
+      margin: EdgeInsets.only(
+        right: 40,
+        left: 40,
+        bottom: 10,
+      ),
+      child: TextField(
+        obscureText: true,
+        controller: controller,
+        decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            hintText: hint,
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: 2, color: turquoiseGreen)),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(width: 4, color: turquoiseGreen))),
+      ),
+    );
+  }
 
-Widget newProfileButton(context) {
-  return Container(
-    margin: EdgeInsets.only(bottom: 50, top: 100),
-    alignment: Alignment.bottomCenter,
-    child: SizedBox(
-      width: 250,
-      height: 70,
-      child: RaisedButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(color: customPink)),
-          color: customPink,
-          child: Text(
-            'New Profile',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, '/create');
-          }),
-    ),
-  );
+  alertWrongCredentials(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Triviaholic found a problem!"),
+      content: Text("Wrong username or password."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Widget appLogo() {
+    return Center(
+        child: CircleAvatar(
+      radius: 70,
+      backgroundImage: AssetImage('assets/triviaholic_logo.png'),
+    ));
+  }
+
+  Widget selectProfileText() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 50, top: 30),
+      child: Text(
+        'Log in',
+        style: TextStyle(
+            fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
+      ),
+    );
+  }
+
+  Widget newProfileButton(BuildContext context, String text) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: 180,
+        height: 70,
+        child: RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(color: customPink)),
+            color: customPink,
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/create');
+            }),
+      ),
+    );
+  }
+
+  Widget loginButton(BuildContext context, String text) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
+      alignment: Alignment.bottomCenter,
+      child: SizedBox(
+        width: 180,
+        height: 70,
+        child: RaisedButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(color: customPink)),
+            color: customPink,
+            child: Text(
+              text,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+            ),
+            onPressed: () {
+              bool correctCredentials =
+                  Provider.of<PlayerState>(context, listen: false)
+                      .setCurrentUser(
+                          usernameController.text, passwordController.text);
+
+              correctCredentials
+                  ? Navigator.pushNamed(context, "/start")
+                  : alertWrongCredentials(context);
+            }),
+      ),
+    );
+  }
 }
 
 Widget spaceBetween(double height) {

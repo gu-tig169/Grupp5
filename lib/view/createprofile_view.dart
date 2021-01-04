@@ -16,7 +16,8 @@ class CreateProfileView extends StatefulWidget {
 
 class _CreateProfileViewState extends State<CreateProfileView> {
   ProfileImage currentImage;
-  TextEditingController editController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +30,11 @@ class _CreateProfileViewState extends State<CreateProfileView> {
       body: Gradienter(
         widget: Column(
           children: [
-            spaceBetween(120),
-            userTextField('Username'),
-            spaceBetween(40),
+            spaceBetween(50),
+            userTextField('Username', usernameController, false),
+            spaceBetween(10),
+            userTextField("Password", passwordController, true),
+            spaceBetween(10),
             dropDown(),
             spaceBetween(40),
             profileImage(),
@@ -44,12 +47,14 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     );
   }
 
-  Widget userTextField(String hint) {
+  Widget userTextField(
+      String hint, TextEditingController controller, bool obscure) {
     return Container(
       //decoration: BoxDecoration(color: Colors.white),
       margin: EdgeInsets.only(right: 40, left: 40),
       child: TextField(
-        controller: editController,
+        obscureText: obscure,
+        controller: controller,
         decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -166,9 +171,11 @@ class _CreateProfileViewState extends State<CreateProfileView> {
               bool userNameExists =
                   Provider.of<PlayerState>(context, listen: false).addPlayer(
                       Player(
-                          username: editController.text,
+                          username: usernameController.text,
+                          password: passwordController.text,
                           image: currentImage.path));
-              print(userNameExists);
+              Provider.of<PlayerState>(context, listen: false).setCurrentUser(
+                  usernameController.text, passwordController.text);
               (userNameExists)
                   ? alertUserExists(context)
                   : Navigator.pushNamed(context, '/start');

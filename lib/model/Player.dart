@@ -1,6 +1,7 @@
 class Player implements Comparable<Player> {
   String id;
   String username;
+  var password;
   int amountOfGames;
   int bestScore;
   String image;
@@ -9,6 +10,7 @@ class Player implements Comparable<Player> {
   Player({
     this.id,
     this.username,
+    this.password,
     this.amountOfGames = 0,
     this.bestScore = 0,
     this.image,

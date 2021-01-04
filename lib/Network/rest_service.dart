@@ -8,6 +8,7 @@ class RestService {
 
   static void registerPlayer(Player player) async {
     String path = "user.json";
+    print(player.password);
     await http.post(
       url + path,
       headers: <String, String>{
@@ -15,6 +16,7 @@ class RestService {
       },
       body: jsonEncode(<String, dynamic>{
         "username": player.username,
+        "password": player.password.toString(),
         "amountOfGames": player.amountOfGames,
         "bestScore": player.bestScore,
         "image": player.image,
@@ -48,6 +50,7 @@ class RestService {
       },
       body: jsonEncode(<String, dynamic>{
         "username": player.username,
+        "password": player.password,
         "amountOfGames": player.amountOfGames,
         "bestScore": player.bestScore,
         "image": player.image,
@@ -67,6 +70,7 @@ class RestService {
         playerList.add(Player(
           id: key,
           username: value['username'],
+          password: value["password"],
           amountOfGames: value['amountOfGames'],
           bestScore: value['bestScore'],
           image: value['image'],

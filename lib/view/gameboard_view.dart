@@ -26,7 +26,7 @@ class _GameBoardViewState extends State<GameBoardView> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: turquoiseGreen,
-          title: Text('Game Board'),
+          title: Text('Triviaholic'),
           centerTitle: true,
         ),
         body: Gradienter(

@@ -8,6 +8,7 @@ void main() {
   runApp(ChangeNotifierProvider(
       create: (context) => state,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: "/",
         onGenerateRoute: RouteHandler.generateRoute,
       )));

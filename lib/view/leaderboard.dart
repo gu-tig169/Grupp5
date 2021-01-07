@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 
 class LeaderboardView extends StatelessWidget {
   @override
@@ -14,10 +16,12 @@ class LeaderboardView extends StatelessWidget {
         backgroundColor: illuminatingEmerald,
         title: Text('Leaderboard'),
       ),
-      body: Center(
-        child: Consumer<PlayerState>(
-            builder: (context, state, child) =>
-                listViewWidget(state.sortbyScore())),
+      body: Gradienter(
+        widget: Center(
+          child: Consumer<PlayerState>(
+              builder: (context, state, child) =>
+                  listViewWidget(state.sortbyScore())),
+        ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );

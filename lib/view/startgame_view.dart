@@ -71,6 +71,10 @@ class _StartGameViewState extends State<StartGameView> {
               List<Question> questions = [];
               Player player = Provider.of<PlayerState>(context, listen: false)
                   .getCurrentUser();
+              player.currentScore = 0;
+              Provider.of<PlayerState>(context, listen: false)
+                  .editPlayer(player);
+              print(player.currentScore);
               if (currentCategory != 'Any') {
                 params.add(
                     'category=' + Category.getCategoryPath(currentCategory));

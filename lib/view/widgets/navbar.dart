@@ -58,7 +58,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     Icons.home,
                   ),
                   onPressed: () {
-                    Navigator.popAndPushNamed(context, '/');
+                    Navigator.popAndPushNamed(context, '/start');
                   },
                 ),
                 height: 38,

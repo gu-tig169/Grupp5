@@ -17,13 +17,13 @@ class SelectProfileView extends StatelessWidget {
           child: Gradienter(
             widget: Column(
               children: [
-                spaceBetween(52),
+                spaceBetween(140),
                 appLogo(),
                 //  spaceBetween(),
                 selectProfileText(),
                 usernameTextField("Enter your username.", usernameController),
                 passwordTextField("Enter your password.", passwordController),
-                // spaceBetween(10),
+                spaceBetween(50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -36,11 +36,10 @@ class SelectProfileView extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  Widget profileDropDown(List<Player> list, BuildContext context) {
+  /* Widget profileDropDown(List<Player> list, BuildContext context) {
     return Container(
         margin: EdgeInsets.only(top: 10, left: 40, right: 40),
         decoration: BoxDecoration(
@@ -85,7 +84,7 @@ class SelectProfileView extends StatelessWidget {
             )),
           ),
         ));
-  }
+  } */
 
   Widget usernameTextField(String hint, TextEditingController controller) {
     return Container(

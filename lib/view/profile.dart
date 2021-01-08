@@ -103,7 +103,6 @@ class _ProfileViewState extends State<ProfileView> {
               currentUser.image = newImage.path;
               Provider.of<PlayerState>(context, listen: false)
                   .editPlayer(currentUser);
-              Navigator.pushNamed(context, "/");
             }),
       ),
     );

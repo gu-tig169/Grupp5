@@ -6,7 +6,7 @@ import 'package:triviaholic/state/PlayerState.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
-class SelectProfileView extends StatelessWidget {
+class loginView extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -20,7 +20,7 @@ class SelectProfileView extends StatelessWidget {
                 spaceBetween(140),
                 appLogo(),
                 //  spaceBetween(),
-                selectProfileText(),
+                loginText(),
                 usernameTextField("Enter your username.", usernameController),
                 passwordTextField("Enter your password.", passwordController),
                 spaceBetween(50),
@@ -171,7 +171,7 @@ class SelectProfileView extends StatelessWidget {
     ));
   }
 
-  Widget selectProfileText() {
+  Widget loginText() {
     return Container(
       margin: EdgeInsets.only(bottom: 50, top: 30),
       child: Text(
@@ -228,7 +228,8 @@ class SelectProfileView extends StatelessWidget {
                           usernameController.text, passwordController.text);
 
               correctCredentials
-                  ? Navigator.pushNamed(context, "/start")
+                  ? Navigator.pushNamedAndRemoveUntil(
+                      context, "/start", (Route<dynamic> route) => false)
                   : alertWrongCredentials(context);
             }),
       ),

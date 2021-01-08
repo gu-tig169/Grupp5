@@ -4,7 +4,7 @@ import 'package:triviaholic/view/endScreen_view.dart';
 import 'package:triviaholic/view/gameboard_view.dart';
 import 'package:triviaholic/view/leaderboard.dart';
 import 'package:triviaholic/view/profile.dart';
-import 'package:triviaholic/view/selectProfileView.dart';
+import 'package:triviaholic/view/loginView.dart';
 import 'package:triviaholic/view/startgame_view.dart';
 
 class RouteHandler {
@@ -13,7 +13,7 @@ class RouteHandler {
 
     switch (settings.name) {
       case "/":
-        return MaterialPageRoute(builder: (_) => SelectProfileView());
+        return MaterialPageRoute(builder: (_) => loginView());
       case "/start":
         return MaterialPageRoute(builder: (context) => StartGameView());
       case "/leaderboard":

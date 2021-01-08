@@ -35,6 +35,8 @@ class _ProfileViewState extends State<ProfileView> {
               spaceBetween(50),
               _editProfileButton(currentUser),
               spaceBetween(15),
+              _logoutButton('Log Out'),
+              spaceBetween(15),
               _deleteButton(context, currentUser),
             ],
           ),
@@ -114,7 +116,7 @@ class _ProfileViewState extends State<ProfileView> {
         width: 100,
         height: 35,
         child: RaisedButton(
-            color: Colors.red,
+            color: Colors.red[400],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(17),
             ),
@@ -140,6 +142,27 @@ class _ProfileViewState extends State<ProfileView> {
         style: TextStyle(fontSize: 42),
       ),
     );
+  }
+
+  Widget _logoutButton(String text) {
+    return Container(
+        child: SizedBox(
+            width: 200,
+            height: 70,
+            child: RaisedButton(
+              color: customPink,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(17)),
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
+              ),
+              onPressed: () {
+                Provider.of<PlayerState>(context, listen: false)
+                    .clearCurrentUser();
+                Navigator.pushNamed(context, '/');
+              },
+            )));
   }
 
   Widget dropDown() {

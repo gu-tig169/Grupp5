@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:triviaholic/colors/CustomColors.dart';
 import 'package:triviaholic/model/GameRound.dart';
 import 'package:triviaholic/model/Question.dart';
-import 'package:triviaholic/view/selectProfileView.dart';
+import 'package:triviaholic/view/loginView.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/Network/game_data.dart';
 import 'dart:async';

@@ -43,14 +43,12 @@ class _CreateProfileViewState extends State<CreateProfileView> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 
   Widget userTextField(
       String hint, TextEditingController controller, bool obscure) {
     return Container(
-      //decoration: BoxDecoration(color: Colors.white),
       margin: EdgeInsets.only(right: 40, left: 40),
       child: TextField(
         obscureText: obscure,
@@ -174,8 +172,6 @@ class _CreateProfileViewState extends State<CreateProfileView> {
                           username: usernameController.text,
                           password: passwordController.text,
                           image: currentImage.path));
-              Provider.of<PlayerState>(context, listen: false).setCurrentUser(
-                  usernameController.text, passwordController.text);
               (userNameExists)
                   ? alertUserExists(context)
                   : Navigator.pushNamed(context, '/start');

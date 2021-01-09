@@ -13,7 +13,7 @@ class LeaderboardView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: illuminatingEmerald,
+        backgroundColor: turquoiseGreen,
         title: Text('Leaderboard'),
       ),
       body: Gradienter(

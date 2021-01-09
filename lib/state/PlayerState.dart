@@ -67,6 +67,7 @@ class PlayerState extends ChangeNotifier {
     });
 
     if (!exists) {
+      _currentUser = player;
       var password = player.password;
       var bytes = utf8.encode(password);
       var digest = sha256.convert(bytes);
@@ -76,6 +77,7 @@ class PlayerState extends ChangeNotifier {
       RestService.getPlayers().then((value) => this._playerList = value);
       notifyListeners();
     }
+    print(_playerList.length);
     return exists;
   }
 
@@ -89,7 +91,14 @@ class PlayerState extends ChangeNotifier {
   }
 
   List<Player> sortbyScore() {
-    _playerList.sort();
-    return _playerList;
+    List<Player> playersWithScore = [];
+    for (var player in _playerList) {
+      if (player.bestScore > 0) {
+        playersWithScore.add(player);
+      }
+    }
+    playersWithScore.sort();
+    notifyListeners();
+    return playersWithScore;
   }
 }

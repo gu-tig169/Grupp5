@@ -27,16 +27,17 @@ class _ProfileViewState extends State<ProfileView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _profileTitle(currentUser.username),
-              spaceBetween(70),
+              spaceBetween(10),
               profileImage(currentUser),
               spaceBetween(20),
               dropDown(),
+              spaceBetween(10),
               _profileInfo(currentUser.bestScore),
-              spaceBetween(50),
+              spaceBetween(30),
               _editProfileButton(currentUser),
               spaceBetween(15),
               _logoutButton('Log Out'),
-              spaceBetween(15),
+              spaceBetween(5),
               _deleteButton(context, currentUser),
             ],
           ),
@@ -45,15 +46,6 @@ class _ProfileViewState extends State<ProfileView> {
       bottomNavigationBar: BottomNavBar(),
     );
   }
-
-  // Widget _profilePicture(String image) {
-  //   return Container(
-  //     child: CircleAvatar(
-  //       backgroundImage: AssetImage(image),
-  //       radius: 50,
-  //     ),
-  //   );
-  // }
 
   Widget profileImage(Player currentUser) {
     return Center(

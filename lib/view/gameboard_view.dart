@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/GameRound.dart';
-import 'package:triviaholic/model/Question.dart';
-import 'package:triviaholic/view/loginView.dart';
-import 'package:triviaholic/view/widgets/gradient.dart';
-import 'package:triviaholic/Network/game_data.dart';
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/model/game_round.dart';
+import 'package:triviaholic/view/login_view.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
+
+// ignore: must_be_immutable
 class GameBoardView extends StatefulWidget {
   int currentQuestion = 0;
   GameRound gameData;
@@ -102,11 +103,10 @@ class _GameBoardViewState extends State<GameBoardView> {
               });
               Future.delayed(Duration(seconds: 2), () {
                 setState(() {
-                  print(correctAnswer);
-
                   correctAnswer
                       ? widget.gameData.players.currentScore =
                           widget.gameData.players.currentScore + 10
+                      // ignore: unnecessary_statements
                       : null;
 
                   widget.currentQuestion > widget.gameData.questions.length - 2

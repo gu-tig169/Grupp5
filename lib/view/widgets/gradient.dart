@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/colors/custom_colors.dart';
 
 class Gradienter extends StatelessWidget {
   final Widget widget;

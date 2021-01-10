@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/state/PlayerState.dart';
-import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:provider/provider.dart';
+
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/state/player_state.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
 
 class EndScreenView extends StatelessWidget {
   @override
@@ -13,6 +14,7 @@ class EndScreenView extends StatelessWidget {
         Provider.of<PlayerState>(context, listen: false).getCurrentUser();
     player.currentScore > player.bestScore
         ? player.bestScore = player.currentScore
+        // ignore: unnecessary_statements
         : null;
     Provider.of<PlayerState>(context, listen: false).editPlayer(player);
 

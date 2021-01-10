@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:triviaholic/model/Answer.dart';
-import 'package:triviaholic/model/Player.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:triviaholic/model/Answer.dart';
 import 'package:triviaholic/model/Question.dart';
 
 class GameData {
@@ -25,9 +25,7 @@ class GameData {
         .replaceAll("&oacute", "ó")
         .replaceAll("&Uuml", "Ü")
         .replaceAll("&shy;", "-")
-        .replaceAll("&eacute", "é")
-        )['results'];
-        
+        .replaceAll("&eacute", "é"))['results'];
 
     for (var question in responseBody) {
       List<Answer> answers = [];

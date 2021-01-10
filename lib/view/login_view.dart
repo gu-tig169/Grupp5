@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/state/PlayerState.dart';
-import 'package:triviaholic/view/widgets/navbar.dart';
+
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
-class loginView extends StatelessWidget {
+// ignore: must_be_immutable
+class LoginView extends StatelessWidget {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override

@@ -1,18 +1,16 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:triviaholic/Network/game_data.dart';
 import 'package:triviaholic/colors/custom_colors.dart';
 import 'package:triviaholic/model/Category.dart';
+import 'package:triviaholic/model/game_round.dart';
 import 'package:triviaholic/model/Player.dart';
 import 'package:triviaholic/model/Question.dart';
-import 'package:triviaholic/model/game_round.dart';
 import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/login_view.dart';
-import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/view/widgets/gradient.dart';
+import 'package:provider/provider.dart';
 
 class StartGameView extends StatefulWidget {
   @override
@@ -76,6 +74,7 @@ class _StartGameViewState extends State<StartGameView> {
               player.currentScore = 0;
               Provider.of<PlayerState>(context, listen: false)
                   .editPlayer(player);
+              print(player.currentScore);
               if (currentCategory != 'Any') {
                 params.add(
                     'category=' + Category.getCategoryPath(currentCategory));
@@ -214,7 +213,9 @@ class _StartGameViewState extends State<StartGameView> {
               .toList(),
           onChanged: (changedValue) {
             currentCategory = changedValue;
-            setState(() {});
+            setState(() {
+              // print(changedValue);
+            });
           },
           value: currentCategory,
           hint: Text('Choose categories'),

@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/state/PlayerState.dart';
 import 'package:provider/provider.dart';
+
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/state/player_state.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -11,7 +12,6 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  @override
   alertNotEnoughQuestions(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
@@ -70,7 +70,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 child: IconButton(
                   icon: Icon(Icons.leaderboard),
                   onPressed: () {
-                    print(player);
                     Navigator.popAndPushNamed(context, '/leaderboard');
                   },
                 ),

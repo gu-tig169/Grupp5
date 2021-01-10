@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:triviaholic/Network/rest_service.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
+import 'package:triviaholic/colors/custom_colors.dart';
 import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/model/ProfileImage.dart';
-import 'package:triviaholic/state/PlayerState.dart';
+import 'package:triviaholic/model/profile_image.dart';
+import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
-import 'package:triviaholic/view/widgets/navbar.dart';
 
 class CreateProfileView extends StatefulWidget {
   @override
@@ -99,7 +99,6 @@ class _CreateProfileViewState extends State<CreateProfileView> {
           onChanged: (value) {
             setState(() {
               currentImage = value;
-              print(value);
             });
           },
           value: currentImage,

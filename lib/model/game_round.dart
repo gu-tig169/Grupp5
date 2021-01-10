@@ -1,5 +1,5 @@
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/model/Question.dart';
+import 'package:triviaholic/model/player.dart';
+import 'package:triviaholic/model/question.dart';
 
 class GameRound {
   String difficulty;

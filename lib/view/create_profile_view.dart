@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:triviaholic/Network/rest_service.dart';
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/model/ProfileImage.dart';
-import 'package:triviaholic/state/PlayerState.dart';
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/model/player.dart';
+import 'package:triviaholic/model/profile_image.dart';
+import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
-import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 
 class CreateProfileView extends StatefulWidget {
   @override
@@ -31,22 +32,22 @@ class _CreateProfileViewState extends State<CreateProfileView> {
         widget: Column(
           children: [
             spaceBetween(50),
-            userTextField('Username', usernameController, false),
+            _userTextField('Username', usernameController, false),
             spaceBetween(10),
-            userTextField("Password", passwordController, true),
+            _userTextField("Password", passwordController, true),
             spaceBetween(10),
-            dropDown(),
+            _dropDown(),
             spaceBetween(40),
-            profileImage(),
+            _profileImage(),
             spaceBetween(40),
-            createProfileButton(context),
+            _createProfileButton(context),
           ],
         ),
       ),
     );
   }
 
-  Widget userTextField(
+  Widget _userTextField(
       String hint, TextEditingController controller, bool obscure) {
     return Container(
       margin: EdgeInsets.only(right: 40, left: 40),
@@ -67,7 +68,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     );
   }
 
-  Widget dropDown() {
+  Widget _dropDown() {
     return Container(
         margin: EdgeInsets.only(right: 40, left: 40),
         decoration: ShapeDecoration(
@@ -99,7 +100,6 @@ class _CreateProfileViewState extends State<CreateProfileView> {
           onChanged: (value) {
             setState(() {
               currentImage = value;
-              print(value);
             });
           },
           value: currentImage,
@@ -108,13 +108,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
         )));
   }
 
-  Widget spaceBetween(double height) {
-    return Container(
-      height: height,
-    );
-  }
-
-  Widget profileImage() {
+  Widget _profileImage() {
     return Center(
         child: CircleAvatar(
       radius: 50,
@@ -124,34 +118,7 @@ class _CreateProfileViewState extends State<CreateProfileView> {
     ));
   }
 
-  alertUserExists(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Triviaholic found a problem!"),
-      content: Text("This username is already used"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  Widget createProfileButton(context) {
+  Widget _createProfileButton(context) {
     return Container(
       child: SizedBox(
         width: 250,
@@ -172,9 +139,12 @@ class _CreateProfileViewState extends State<CreateProfileView> {
                           username: usernameController.text,
                           password: passwordController.text,
                           image: currentImage.path));
-              (userNameExists)
-                  ? alertUserExists(context)
-                  : Navigator.pushNamed(context, '/start');
+              if (userNameExists) {
+                alert(context, "Triviaholic found a problem!",
+                    "This username is already used");
+              } else {
+                Navigator.pushNamed(context, '/start');
+              }
             }),
       ),
     );

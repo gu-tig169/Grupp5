@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:triviaholic/colors/CustomColors.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/state/PlayerState.dart';
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/model/player.dart';
+import 'package:triviaholic/model/profile_image.dart';
+import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
-import 'package:triviaholic/model/ProfileImage.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -26,17 +27,22 @@ class _ProfileViewState extends State<ProfileView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _profileTitle(currentUser.username),
+              headerText(currentUser.username),
               spaceBetween(10),
-              profileImage(currentUser),
+              _profileImage(currentUser),
               spaceBetween(20),
-              dropDown(),
-              spaceBetween(10),
+              _dropDown(),
+              spaceBetween(50),
               _profileInfo(currentUser.bestScore),
-              spaceBetween(30),
-              _editProfileButton(currentUser),
+              spaceBetween(50),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _editProfileButton(currentUser),
+                  _logoutButton('Log Out'),
+                ],
+              ),
               spaceBetween(15),
-              _logoutButton('Log Out'),
               spaceBetween(5),
               _deleteButton(context, currentUser),
             ],
@@ -47,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget profileImage(Player currentUser) {
+  Widget _profileImage(Player currentUser) {
     return Center(
         child: CircleAvatar(
       radius: 50,
@@ -55,12 +61,6 @@ class _ProfileViewState extends State<ProfileView> {
           ? AssetImage(currentUser.image)
           : AssetImage(newImage.path),
     ));
-  }
-
-  Widget spaceBetween(double height) {
-    return Container(
-      height: height,
-    );
   }
 
   Widget _profileInfo(int bestScore) {
@@ -81,8 +81,9 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _editProfileButton(Player currentUser) {
     return Container(
+      margin: EdgeInsets.only(right: 10),
       child: SizedBox(
-        width: 200,
+        width: 150,
         height: 70,
         child: RaisedButton(
             color: customPink,
@@ -126,20 +127,10 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _profileTitle(String username) {
-    return Container(
-      margin: EdgeInsets.only(top: 1),
-      child: Text(
-        username,
-        style: TextStyle(fontSize: 42),
-      ),
-    );
-  }
-
   Widget _logoutButton(String text) {
     return Container(
         child: SizedBox(
-            width: 200,
+            width: 150,
             height: 70,
             child: RaisedButton(
               color: customPink,
@@ -157,7 +148,7 @@ class _ProfileViewState extends State<ProfileView> {
             )));
   }
 
-  Widget dropDown() {
+  Widget _dropDown() {
     return Container(
         margin: EdgeInsets.only(right: 40, left: 40),
         decoration: ShapeDecoration(
@@ -189,7 +180,6 @@ class _ProfileViewState extends State<ProfileView> {
           onChanged: (value) {
             setState(() {
               newImage = value;
-              print(value);
             });
           },
           value: newImage,

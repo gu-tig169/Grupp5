@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:triviaholic/model/Player.dart';
 import 'package:http/http.dart' as http;
+import 'package:triviaholic/model/player.dart';
 
 class RestService {
   static final String url = 'https://quiz-26e0c-default-rtdb.firebaseio.com/';
 
   static void registerPlayer(Player player) async {
     String path = "user.json";
-    print(player.password);
     await http.post(
       url + path,
       headers: <String, String>{
@@ -76,7 +75,6 @@ class RestService {
           image: value['image'],
           //   currentScore: value['currentScore'],
         ));
-        print("currentScore:" + value["currentScore"].toString());
       },
     );
 

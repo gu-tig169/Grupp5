@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
-import 'package:triviaholic/model/Answer.dart';
-import 'package:triviaholic/model/Question.dart';
+import 'package:triviaholic/model/answer.dart';
+import 'package:triviaholic/model/question.dart';
 
 class GameData {
   static final String url =
@@ -15,7 +14,6 @@ class GameData {
 
     http.Response response = await http.get(url + paramsToString);
     List<Question> questions = [];
-    // var fixedJsonResponse = jsonResponse.replaceAll("&quot;", "'")
 
     var jsonResponse = response.body;
     var responseBody = jsonDecode(jsonResponse

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:triviaholic/colors/custom_colors.dart';
 import 'package:triviaholic/state/player_state.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 
 // ignore: must_be_immutable
@@ -17,20 +18,22 @@ class LoginView extends StatelessWidget {
           child: Gradienter(
             widget: Column(
               children: [
-                spaceBetween(140),
+                spaceBetween(60),
                 appLogo(),
-                //  spaceBetween(),
-                loginText(),
-                usernameTextField("Enter your username.", usernameController),
-                passwordTextField("Enter your password.", passwordController),
+                spaceBetween(40),
+                headerText("Log In"),
                 spaceBetween(50),
+                _usernameTextField("Enter your username.", usernameController),
+                _passwordTextField("Enter your password.", passwordController),
+                spaceBetween(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    loginButton(context, "Sign in"),
-                    newProfileButton(context, "Create User"),
+                    _loginButton(context, "Sign in"),
+                    _newProfileButton(context, "Create User"),
                   ],
                 ),
+                spaceBetween(30),
               ],
             ),
           ),
@@ -39,56 +42,8 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  /* Widget profileDropDown(List<Player> list, BuildContext context) {
+  Widget _usernameTextField(String hint, TextEditingController controller) {
     return Container(
-        margin: EdgeInsets.only(top: 10, left: 40, right: 40),
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.5, color: brunsWickGreen),
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        child: DropdownButton<String>(
-          dropdownColor: nyanza,
-          isExpanded: true,
-          iconSize: 50,
-          icon: Icon(
-            Icons.arrow_drop_down,
-            color: brunsWickGreen,
-          ),
-          iconEnabledColor: darkJungleGreen,
-          items: list
-              .map((userItem) => DropdownMenuItem<String>(
-                      child: Row(children: [
-                        Container(
-                          margin: EdgeInsets.only(
-                            left: 8.8,
-                          ),
-                          child: Text(userItem.username.toString(),
-                              style: TextStyle(fontSize: 22)),
-                        ),
-                      ]),
-                      value: userItem.username)
-                  // klura här sen
-                  )
-              .toList(),
-          onChanged: (value) {
-            Provider.of<PlayerState>(context, listen: false)
-                .setCurrentUser(value, "password");
-            Navigator.pushNamed(context, '/start');
-          },
-          hint: Container(
-            margin: EdgeInsets.only(
-              left: 8.8,
-            ),
-            child: (Text(
-              'Choose profile',
-              style: TextStyle(fontStyle: FontStyle.italic),
-            )),
-          ),
-        ));
-  } */
-
-  Widget usernameTextField(String hint, TextEditingController controller) {
-    return Container(
-      //decoration: BoxDecoration(color: Colors.white),
       margin: EdgeInsets.only(
         right: 40,
         left: 40,
@@ -111,9 +66,8 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Widget passwordTextField(String hint, TextEditingController controller) {
+  Widget _passwordTextField(String hint, TextEditingController controller) {
     return Container(
-      //decoration: BoxDecoration(color: Colors.white),
       margin: EdgeInsets.only(
         right: 40,
         left: 40,
@@ -136,53 +90,7 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  alertWrongCredentials(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Triviaholic found a problem!"),
-      content: Text("Wrong username or password."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  Widget appLogo() {
-    return Center(
-        child: CircleAvatar(
-      radius: 70,
-      backgroundImage: AssetImage('assets/triviaholic_logo.png'),
-    ));
-  }
-
-  Widget loginText() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 50, top: 30),
-      child: Text(
-        'Log in',
-        style: TextStyle(
-            fontSize: 36, fontWeight: FontWeight.w300, color: darkJungleGreen),
-      ),
-    );
-  }
-
-  Widget newProfileButton(BuildContext context, String text) {
+  Widget _newProfileButton(BuildContext context, String text) {
     return Container(
       margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
       alignment: Alignment.bottomCenter,
@@ -205,7 +113,7 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Widget loginButton(BuildContext context, String text) {
+  Widget _loginButton(BuildContext context, String text) {
     return Container(
       margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
       alignment: Alignment.bottomCenter,
@@ -230,13 +138,10 @@ class LoginView extends StatelessWidget {
               correctCredentials
                   ? Navigator.pushNamedAndRemoveUntil(
                       context, "/start", (Route<dynamic> route) => false)
-                  : alertWrongCredentials(context);
+                  : alert(context, "Triviaholic found a problem!",
+                      "Wrong username or password.");
             }),
       ),
     );
   }
-}
-
-Widget spaceBetween(double height) {
-  return SizedBox(height: height);
 }

@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:triviaholic/colors/custom_colors.dart';
-import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/player.dart';
 import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 
 class EndScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Player player =
         Provider.of<PlayerState>(context, listen: false).getCurrentUser();
-    player.currentScore > player.bestScore
-        ? player.bestScore = player.currentScore
-        // ignore: unnecessary_statements
-        : null;
+    if (player.currentScore > player.bestScore) {
+      player.bestScore = player.currentScore;
+    }
     Provider.of<PlayerState>(context, listen: false).editPlayer(player);
 
     return Scaffold(
@@ -23,10 +23,15 @@ class EndScreenView extends StatelessWidget {
         child: Gradienter(
           widget: Column(
             children: [
-              aftergameText(),
-              aftergameScore(player),
-              appButton('Main Menu', context),
-              appButton('Leaderboard', context),
+              spaceBetween(80),
+              appLogo(),
+              spaceBetween(50),
+              headerText('Congratulations! You got'),
+              spaceBetween(20),
+              _aftergameScore(player),
+              spaceBetween(50),
+              _appButton('Main Menu', context),
+              _appButton('Leaderboard', context),
             ],
           ),
         ),
@@ -35,20 +40,8 @@ class EndScreenView extends StatelessWidget {
     );
   }
 
-  Widget aftergameText() {
+  Widget _aftergameScore(Player player) {
     return Container(
-      margin: EdgeInsets.only(top: 100),
-      alignment: Alignment.center,
-      child: Text(
-        'Congratulations! You got',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
-      ),
-    );
-  }
-
-  Widget aftergameScore(Player player) {
-    return Container(
-      margin: EdgeInsets.only(top: 100, bottom: 60),
       alignment: Alignment.center,
       child: Text(
         player.currentScore.toString() + ' points!',
@@ -57,7 +50,7 @@ class EndScreenView extends StatelessWidget {
     );
   }
 
-  Widget appButton(text, context) {
+  Widget _appButton(text, context) {
     return Container(
       margin: EdgeInsets.only(bottom: 10, top: 10),
       alignment: Alignment.bottomCenter,

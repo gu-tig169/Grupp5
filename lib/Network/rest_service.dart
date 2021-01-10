@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
-import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/player.dart';
 
 class RestService {
   static final String url = 'https://quiz-26e0c-default-rtdb.firebaseio.com/';

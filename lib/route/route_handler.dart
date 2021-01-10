@@ -6,7 +6,7 @@ import 'package:triviaholic/view/gameboard_view.dart';
 import 'package:triviaholic/view/leaderboard.dart';
 import 'package:triviaholic/view/login_view.dart';
 import 'package:triviaholic/view/profile.dart';
-import 'package:triviaholic/view/startgame_view.dart';
+import 'package:triviaholic/view/start_game_view.dart';
 
 class RouteHandler {
   static Route<dynamic> generateRoute(RouteSettings settings) {

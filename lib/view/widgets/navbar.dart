@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:triviaholic/colors/custom_colors.dart';
-import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/player.dart';
 import 'package:triviaholic/state/player_state.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -12,33 +12,6 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  alertNotEnoughQuestions(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Triviaholic found a problem!"),
-      content: Text("You are not logged in. Try to choose a player"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   Widget build(BuildContext context) {
     Player player =
         Provider.of<PlayerState>(context, listen: false).getCurrentUser();
@@ -83,7 +56,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   icon: Icon(Icons.person),
                   onPressed: () {
                     if (player == null) {
-                      alertNotEnoughQuestions(context);
+                      alert(context, "Triviaholic found a problem!",
+                          "You are not logged in. Try to choose a player");
                     } else {
                       Navigator.popAndPushNamed(context, '/profile');
                     }

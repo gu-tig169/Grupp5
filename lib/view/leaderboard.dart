@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:triviaholic/colors/custom_colors.dart';
-import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/player.dart';
 import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
@@ -20,14 +20,14 @@ class LeaderboardView extends StatelessWidget {
         widget: Center(
           child: Consumer<PlayerState>(
               builder: (context, state, child) =>
-                  listViewWidget(state.sortbyScore())),
+                  _listViewWidget(state.sortbyScore())),
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
 
-  Widget listViewWidget(List<Player> list) {
+  Widget _listViewWidget(List<Player> list) {
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (context, index) => _listItem(

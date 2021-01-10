@@ -1,4 +1,4 @@
-import 'package:triviaholic/model/Answer.dart';
+import 'package:triviaholic/model/answer.dart';
 
 class Question {
   String _question;

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:triviaholic/Network/rest_service.dart';
-import 'package:triviaholic/model/Player.dart';
+import 'package:triviaholic/model/player.dart';
 
 class PlayerState extends ChangeNotifier {
   List<Player> _playerList = [];

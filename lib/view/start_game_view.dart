@@ -2,17 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:triviaholic/Network/game_data.dart';
-import 'package:triviaholic/colors/custom_colors.dart';
-import 'package:triviaholic/model/Category.dart';
-import 'package:triviaholic/model/Player.dart';
-import 'package:triviaholic/model/Question.dart';
+import 'package:triviaholic/model/category.dart';
 import 'package:triviaholic/model/game_round.dart';
+import 'package:triviaholic/model/player.dart';
+import 'package:triviaholic/model/question.dart';
+import 'package:triviaholic/network/game_data.dart';
 import 'package:triviaholic/state/player_state.dart';
-import 'package:triviaholic/view/login_view.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/navbar.dart';
+import 'package:triviaholic/colors/custom_colors.dart';
+import 'package:triviaholic/view/widgets/common_widgets.dart';
 
 class StartGameView extends StatefulWidget {
   @override
@@ -35,17 +34,17 @@ class _StartGameViewState extends State<StartGameView> {
           widget: Column(
             children: [
               spaceBetween(100),
-              homeText(),
+              headerText('Welcome to Triviaholic!'),
               spaceBetween(80),
-              dropDownTitle('Choose your difficulty'),
+              _dropDownTitle('Choose your difficulty'),
               spaceBetween(5),
-              dropDownDifficulty(difficultylist),
+              _dropDownDifficulty(difficultylist),
               spaceBetween(30),
-              dropDownTitle('Choose your category'),
+              _dropDownTitle('Choose your category'),
               spaceBetween(5),
-              dropDownCategory(),
+              _dropDownCategory(),
               spaceBetween(50),
-              startgameButton(context),
+              _startgameButton(context),
             ],
           ),
         ),
@@ -54,7 +53,7 @@ class _StartGameViewState extends State<StartGameView> {
     );
   }
 
-  Widget startgameButton(context) {
+  Widget _startgameButton(context) {
     return Container(
       // margin: EdgeInsets.only(bottom: 50, top: 120),
       alignment: Alignment.bottomCenter,
@@ -86,7 +85,7 @@ class _StartGameViewState extends State<StartGameView> {
               }
 
               await GameData.getGameData(params)
-                  .then((value) => questions = value);
+                  .then((value) => questions = value.cast<Question>());
               questions.length >= 1
                   ? Navigator.pushNamed(context, "/game",
                       arguments: GameRound(
@@ -94,54 +93,15 @@ class _StartGameViewState extends State<StartGameView> {
                           difficulty: currentDifficulty,
                           category: currentCategory,
                           players: player))
-                  : alertNotEnoughQuestions(context);
+                  : alert(context, "Triviaholic found a problem!",
+                      "Not enough questions found. Try to change difficulty to 'Any'");
               params = [];
             }),
       ),
     );
   }
 
-// kanske dlytta den här alerten till egen fil? Blir grötigt
-  alertNotEnoughQuestions(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Triviaholic found a problem!"),
-      content:
-          Text("Not enough questions found. Try to change difficulty to 'Any'"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  Widget homeText() {
-    return Container(
-      // margin: EdgeInsets.only(top: 100),
-      alignment: Alignment.center,
-      child: Text(
-        'Welcome to Triviaholic!',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
-      ),
-    );
-  }
-
-  Widget dropDownDifficulty(List<String> list) {
+  Widget _dropDownDifficulty(List<String> list) {
     return Container(
         child: Container(
             margin: EdgeInsets.only(right: 1, left: 0),
@@ -178,7 +138,7 @@ class _StartGameViewState extends State<StartGameView> {
             ))));
   }
 
-  Widget dropDownTitle(String text) {
+  Widget _dropDownTitle(String text) {
     return Container(
       child: Text(
         text,
@@ -187,7 +147,7 @@ class _StartGameViewState extends State<StartGameView> {
     );
   }
 
-  Widget dropDownCategory() {
+  Widget _dropDownCategory() {
     return Container(
         margin: EdgeInsets.only(right: 50, left: 50),
         decoration: ShapeDecoration(

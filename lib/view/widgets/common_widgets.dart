@@ -30,12 +30,17 @@ alert(BuildContext context, String title, String content) {
 }
 
 Widget headerText(String text) {
-  return Container(
-    alignment: Alignment.center,
-    child: Text(
-      text,
-      style: TextStyle(fontSize: 36, fontWeight: FontWeight.w400),
-    ),
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+        ),
+      )
+    ],
   );
 }
 

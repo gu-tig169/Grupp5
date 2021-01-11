@@ -121,7 +121,8 @@ class _ProfileViewState extends State<ProfileView> {
               Provider.of<PlayerState>(context, listen: false)
                   .deletePlayer(deletedUser.id);
 
-              Navigator.pushNamed(context, "/");
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+              Navigator.pushNamed(context, '/');
             }),
       ),
     );
@@ -143,6 +144,8 @@ class _ProfileViewState extends State<ProfileView> {
               onPressed: () {
                 Provider.of<PlayerState>(context, listen: false)
                     .clearCurrentUser();
+
+                Navigator.popUntil(context, ModalRoute.withName('/'));
                 Navigator.pushNamed(context, '/');
               },
             )));

@@ -13,6 +13,7 @@ class AfterGameView extends StatelessWidget {
   Widget build(BuildContext context) {
     Player player =
         Provider.of<PlayerState>(context, listen: false).getCurrentUser();
+    print(player.currentScore);
     if (player.currentScore > player.bestScore) {
       player.bestScore = player.currentScore;
     }

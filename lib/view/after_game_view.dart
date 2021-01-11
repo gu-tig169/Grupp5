@@ -8,7 +8,7 @@ import 'package:triviaholic/state/player_state.dart';
 import 'package:triviaholic/view/widgets/gradient.dart';
 import 'package:triviaholic/view/widgets/common_widgets.dart';
 
-class EndScreenView extends StatelessWidget {
+class AfterGameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Player player =
@@ -71,7 +71,8 @@ class EndScreenView extends StatelessWidget {
                 case 'Main Menu':
                   return Navigator.pushNamed(context, '/start');
                 case 'Leaderboard':
-                  return Navigator.pushNamed(context, '/leaderboard');
+                  return Navigator.pushNamedAndRemoveUntil(
+                      context, '/leaderboard', (Route<dynamic> route) => false);
                 default:
               }
             }),

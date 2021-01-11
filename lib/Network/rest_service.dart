@@ -24,7 +24,7 @@ class RestService {
     );
   }
 
-  // hämtar players
+  // fetches players from firebase
   static Future<List<Player>> getPlayers() async {
     String path = "user.json";
     http.Response response = await http.get(url + path);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:triviaholic/view/after_game_view.dart';
 
 import 'package:triviaholic/view/create_profile_view.dart';
-import 'package:triviaholic/view/end_screen_view.dart';
 import 'package:triviaholic/view/gameboard_view.dart';
-import 'package:triviaholic/view/leaderboard.dart';
+import 'package:triviaholic/view/leaderboard_view.dart';
 import 'package:triviaholic/view/login_view.dart';
-import 'package:triviaholic/view/profile.dart';
+import 'package:triviaholic/view/profile_view.dart';
 import 'package:triviaholic/view/start_game_view.dart';
 
 class RouteHandler {
@@ -22,7 +22,7 @@ class RouteHandler {
       case "/create":
         return MaterialPageRoute(builder: (context) => CreateProfileView());
       case "/endscreen":
-        return MaterialPageRoute(builder: (context) => EndScreenView());
+        return MaterialPageRoute(builder: (context) => AfterGameView());
       case "/profile":
         return MaterialPageRoute(builder: (context) => ProfileView());
       case "/game":

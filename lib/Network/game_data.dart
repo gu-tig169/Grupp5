@@ -6,7 +6,7 @@ import 'package:triviaholic/model/question.dart';
 
 class GameData {
   static final String url =
-      'https://opentdb.com/api.php?amount=15&type=multiple&';
+      'https://opentdb.com/api.php?amount=10&type=multiple&';
 
   static Future<List<Question>> getGameData(params) async {
     String paramsToString = '';

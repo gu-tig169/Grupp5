@@ -24,11 +24,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
-              label: 'Home',
+              label: 'Start',
               icon: SizedBox(
                 child: IconButton(
                   icon: Icon(
-                    Icons.home,
+                    Icons.videogame_asset,
                   ),
                   onPressed: () {
                     Navigator.popAndPushNamed(context, '/start');

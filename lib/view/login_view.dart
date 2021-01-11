@@ -13,29 +13,27 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Gradienter(
-            widget: Column(
-              children: [
-                spaceBetween(60),
-                appLogo(),
-                spaceBetween(40),
-                headerText("Log In"),
-                spaceBetween(50),
-                _usernameTextField("Enter your username.", usernameController),
-                _passwordTextField("Enter your password.", passwordController),
-                spaceBetween(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _loginButton(context, "Sign in"),
-                    _newProfileButton(context, "Create User"),
-                  ],
-                ),
-                spaceBetween(30),
-              ],
-            ),
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: Gradienter(
+          widget: Column(
+            children: [
+              spaceBetween(60),
+              appLogo(),
+              spaceBetween(40),
+              headerText("Log In"),
+              spaceBetween(50),
+              _usernameTextField("Enter your username.", usernameController),
+              _passwordTextField("Enter your password.", passwordController),
+              spaceBetween(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _loginButton(context, "Sign in"),
+                  _newProfileButton(context, "Create User"),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -95,7 +93,7 @@ class LoginView extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
       alignment: Alignment.bottomCenter,
       child: SizedBox(
-        width: 180,
+        width: 160,
         height: 70,
         child: RaisedButton(
             shape: RoundedRectangleBorder(
@@ -104,7 +102,7 @@ class LoginView extends StatelessWidget {
             color: customPink,
             child: Text(
               text,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
               Navigator.pushNamed(context, '/create');
@@ -118,7 +116,7 @@ class LoginView extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 50, top: 50, left: 5, right: 5),
       alignment: Alignment.bottomCenter,
       child: SizedBox(
-        width: 180,
+        width: 160,
         height: 70,
         child: RaisedButton(
             shape: RoundedRectangleBorder(
@@ -127,7 +125,7 @@ class LoginView extends StatelessWidget {
             color: customPink,
             child: Text(
               text,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
             ),
             onPressed: () {
               bool correctCredentials =

@@ -6,7 +6,7 @@ import 'package:triviaholic/model/player.dart';
 class RestService {
   static final String url = 'https://quiz-26e0c-default-rtdb.firebaseio.com/';
 
-  static void registerPlayer(Player player) async {
+  static Future<List<Player>> registerPlayer(Player player) async {
     String path = "user.json";
     await http.post(
       url + path,
@@ -22,6 +22,7 @@ class RestService {
         "currentScore": player.currentScore
       }),
     );
+    return getPlayers();
   }
 
   // fetches players from firebase
@@ -32,9 +33,11 @@ class RestService {
   }
 
   // Deletes player
-  static void deletePlayer(String id) async {
+  static Future<List<Player>> deletePlayer(String id) async {
     String path = "user/";
-    await http.delete("$url$path$id.json");
+    http.Response response = await http.delete("$url$path$id.json");
+    print(response.statusCode);
+    return getPlayers();
   }
 
   //Updates players Highscore

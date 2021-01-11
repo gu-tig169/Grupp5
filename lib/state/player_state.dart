@@ -33,8 +33,7 @@ class PlayerState extends ChangeNotifier {
   }
 
   void deletePlayer(String id) async {
-    RestService.deletePlayer(id);
-    this._playerList = await RestService.getPlayers();
+    this._playerList = await RestService.deletePlayer(id);
     notifyListeners();
   }
 
@@ -57,7 +56,7 @@ class PlayerState extends ChangeNotifier {
     return player;
   }
 
-  bool addPlayer(Player player) {
+  Future<bool> addPlayer(Player player) async {
     bool exists = false;
     _playerList.forEach((existingPlayer) {
       if (player.username == existingPlayer.username) {
@@ -72,15 +71,8 @@ class PlayerState extends ChangeNotifier {
       var bytes = utf8.encode(password);
       var digest = sha256.convert(bytes);
       player.password = digest;
-      RestService.registerPlayer(player);
-      _playerList.add(player);
-      RestService.getPlayers()
-          .then((value) => this._playerList = value)
-          .then((value) => value.forEach((element) {
-                if (element.username == player.username) {
-                  setCurrentUser(element.username, passwordUnencoded);
-                }
-              }));
+      _playerList = await RestService.registerPlayer(player);
+      setCurrentUser(player.username, passwordUnencoded);
       notifyListeners();
     }
     print(_playerList.length);

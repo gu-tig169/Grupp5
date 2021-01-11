@@ -131,11 +131,11 @@ class _CreateProfileViewState extends State<CreateProfileView> {
               'Create Profile',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.w300),
             ),
-            onPressed: () {
+            onPressed: () async {
               RestService.getPlayers();
               bool userNameExists =
-                  Provider.of<PlayerState>(context, listen: false).addPlayer(
-                      Player(
+                  await Provider.of<PlayerState>(context, listen: false)
+                      .addPlayer(Player(
                           username: usernameController.text,
                           password: passwordController.text,
                           image: currentImage.path));

@@ -33,7 +33,7 @@ class LoginView extends StatelessWidget {
                     _newProfileButton(context, "Create User"),
                   ],
                 ),
-                spaceBetween(30),
+                spaceBetween(110),
               ],
             ),
           ),

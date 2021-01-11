@@ -23,7 +23,7 @@ class GameBoardView extends StatefulWidget {
 class _GameBoardViewState extends State<GameBoardView> {
   Color _buttonColor1 = customPink;
   Timer _timer;
-  int _counter = 15;
+  int _counter = 10;
   bool _timerIsOn = true;
 
   @override
@@ -53,7 +53,7 @@ class _GameBoardViewState extends State<GameBoardView> {
   }
 
   void _startTimer() {
-    _counter = 15;
+    _counter = 10;
     _timerIsOn = false;
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {

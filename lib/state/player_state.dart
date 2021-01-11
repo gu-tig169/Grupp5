@@ -67,14 +67,20 @@ class PlayerState extends ChangeNotifier {
     });
 
     if (!exists) {
-      _currentUser = player;
+      var passwordUnencoded = player.password;
       var password = player.password;
       var bytes = utf8.encode(password);
       var digest = sha256.convert(bytes);
       player.password = digest;
       RestService.registerPlayer(player);
       _playerList.add(player);
-      RestService.getPlayers().then((value) => this._playerList = value);
+      RestService.getPlayers()
+          .then((value) => this._playerList = value)
+          .then((value) => value.forEach((element) {
+                if (element.username == player.username) {
+                  setCurrentUser(element.username, passwordUnencoded);
+                }
+              }));
       notifyListeners();
     }
     print(_playerList.length);

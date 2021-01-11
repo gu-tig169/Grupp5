@@ -71,7 +71,8 @@ class AfterGameView extends StatelessWidget {
                 case 'Main Menu':
                   return Navigator.pushNamed(context, '/start');
                 case 'Leaderboard':
-                  return Navigator.pushNamed(context, '/leaderboard');
+                  return Navigator.pushNamedAndRemoveUntil(
+                      context, '/leaderboard', (Route<dynamic> route) => false);
                 default:
               }
             }),

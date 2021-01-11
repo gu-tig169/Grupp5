@@ -13,29 +13,27 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Gradienter(
-            widget: Column(
-              children: [
-                spaceBetween(60),
-                appLogo(),
-                spaceBetween(40),
-                headerText("Log In"),
-                spaceBetween(50),
-                _usernameTextField("Enter your username.", usernameController),
-                _passwordTextField("Enter your password.", passwordController),
-                spaceBetween(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _loginButton(context, "Sign in"),
-                    _newProfileButton(context, "Create User"),
-                  ],
-                ),
-                spaceBetween(110),
-              ],
-            ),
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: Gradienter(
+          widget: Column(
+            children: [
+              spaceBetween(60),
+              appLogo(),
+              spaceBetween(40),
+              headerText("Log In"),
+              spaceBetween(50),
+              _usernameTextField("Enter your username.", usernameController),
+              _passwordTextField("Enter your password.", passwordController),
+              spaceBetween(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _loginButton(context, "Sign in"),
+                  _newProfileButton(context, "Create User"),
+                ],
+              ),
+            ],
           ),
         ),
       ),
